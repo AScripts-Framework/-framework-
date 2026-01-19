@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Admin Menu - Preview</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #1a1a1a;
+            padding: 20px;
+        }
+        .preview-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .preview-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #8B5CF6;
+        }
+        .preview-header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .preview-header p {
+            color: #a0a0a0;
+            font-size: 14px;
+        }
+        #menu {
+            position: relative;
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <div class="preview-header">
+            <h1><i class="fas fa-shield-halved"></i> AS Admin Menu Preview</h1>
+            <p>Preview of the admin menu interface</p>
+        </div>
+
+        <div id="menu">
+            <div class="menu-container">
+                <!-- Header -->
+                <div class="menu-header">
+                    <h1><i class="fas fa-shield-halved"></i> AS Admin Menu</h1>
+                    <button class="close-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <div class="menu-tabs">
+                    <button class="tab active" data-tab="players" onclick="switchTab('players')">
+                        <i class="fas fa-users"></i> Players
+                    </button>
+                    <button class="tab" data-tab="teleport" onclick="switchTab('teleport')">
+                        <i class="fas fa-map-marked-alt"></i> Teleport
+                    </button>
+                    <button class="tab" data-tab="vehicle" onclick="switchTab('vehicle')">
+                        <i class="fas fa-car"></i> Vehicle
+                    </button>
+                    <button class="tab" data-tab="server" onclick="switchTab('server')">
+                        <i class="fas fa-server"></i> Server
+                    </button>
+                    <button class="tab" data-tab="self" onclick="switchTab('self')">
+                        <i class="fas fa-user"></i> Self
+                    </button>
+                </div>
+
+                <!-- Content Panels -->
+                <div class="menu-content">
+                    <!-- Players Tab -->
+                    <div class="tab-content active" id="players-tab">
+                        <div class="search-bar">
+                            <input type="text" id="player-search" placeholder="Search players...">
+                            <button><i class="fas fa-refresh"></i></button>
+                        </div>
+                        
+                        <div class="player-list">
+                            <div class="player-card" onclick="openPlayerModal('John Doe', 1, 'Police Officer', 5000)">
+                                <div class="player-info-inline">
+                                    <span class="player-name">John Doe</span>
+                                    <span class="player-details">ID: 1 | Job: Police Officer | Money: $5000</span>
+                                </div>
+                            </div>
+                            <div class="player-card" onclick="openPlayerModal('Jane Smith', 2, 'Mechanic', 3500)">
+                                <div class="player-info-inline">
+                                    <span class="player-name">Jane Smith</span>
+                                    <span class="player-details">ID: 2 | Job: Mechanic | Money: $3500</span>
+                                </div>
+                            </div>
+                            <div class="player-card" onclick="openPlayerModal('Mike Johnson', 3, 'Doctor', 7200)">
+                                <div class="player-info-inline">
+                                    <span class="player-name">Mike Johnson</span>
+                                    <span class="player-details">ID: 3 | Job: Doctor | Money: $7200</span>
+                                </div>
+                            </div>
+                            <div class="player-card" onclick="openPlayerModal('Sarah Williams', 4, 'Taxi Driver', 2100)">
+                                <div class="player-info-inline">
+                                    <span class="player-name">Sarah Williams</span>
+                                    <span class="player-details">ID: 4 | Job: Taxi Driver | Money: $2100</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Teleport Tab -->
+                    <div class="tab-content" id="teleport-tab">
+                        <h3>Quick Locations</h3>
+                        <div class="teleport-grid">
+                            <button class="action-btn">
+                                <i class="fas fa-building-shield"></i> LSPD
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-hospital"></i> Hospital
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-warehouse"></i> Garage
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-plane"></i> Airport
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-umbrella-beach"></i> Beach
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-building"></i> LifeInvader
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-landmark"></i> Maze Bank
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-dice"></i> Casino
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Vehicle Tab -->
+                    <div class="tab-content" id="vehicle-tab">
+                        <div class="vehicle-actions">
+                            <input type="text" id="vehicle-model" placeholder="Enter vehicle model..." class="input-field">
+                            <button class="action-btn primary">
+                                <i class="fas fa-plus"></i> Spawn Vehicle
+                            </button>
+                            <button class="action-btn success">
+                                <i class="fas fa-wrench"></i> Repair Vehicle
+                            </button>
+                            <button class="action-btn danger">
+                                <i class="fas fa-trash"></i> Delete Vehicle
+                            </button>
+                        </div>
+                        
+                        <h3>Quick Spawn</h3>
+                        <div class="vehicle-grid">
+                            <button class="vehicle-btn">Adder</button>
+                            <button class="vehicle-btn">T20</button>
+                            <button class="vehicle-btn">Zentorno</button>
+                            <button class="vehicle-btn">Nero</button>
+                            <button class="vehicle-btn">Infernus</button>
+                            <button class="vehicle-btn">Itali GTB</button>
+                        </div>
+                    </div>
+
+                    <!-- Server Tab -->
+                    <div class="tab-content" id="server-tab">
+                        <h3>Weather Control</h3>
+                        <div class="weather-grid">
+                            <button class="action-btn">Clear</button>
+                            <button class="action-btn">Extra Sunny</button>
+                            <button class="action-btn">Clouds</button>
+                            <button class="action-btn">Overcast</button>
+                            <button class="action-btn">Rain</button>
+                            <button class="action-btn">Thunder</button>
+                            <button class="action-btn">Snow</button>
+                            <button class="action-btn">Blizzard</button>
+                        </div>
+
+                        <h3>Time Control</h3>
+                        <div class="time-control">
+                            <input type="number" id="time-hour" min="0" max="23" placeholder="Hour" class="input-field small">
+                            <input type="number" id="time-minute" min="0" max="59" placeholder="Minute" class="input-field small">
+                            <button class="action-btn primary">
+                                <i class="fas fa-clock"></i> Set Time
+                            </button>
+                        </div>
+
+                        <h3>Server Announcement</h3>
+                        <div class="announcement">
+                            <textarea id="announcement-text" placeholder="Enter announcement message..." class="textarea-field"></textarea>
+                            <button class="action-btn primary">
+                                <i class="fas fa-bullhorn"></i> Send Announcement
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Self Tab -->
+                    <div class="tab-content" id="self-tab">
+                        <div class="self-actions">
+                            <button class="action-btn primary">
+                                <i class="fas fa-ghost"></i> Toggle Noclip
+                            </button>
+                            <button class="action-btn primary">
+                                <i class="fas fa-shield"></i> Toggle Godmode
+                            </button>
+                            <button class="action-btn primary">
+                                <i class="fas fa-eye-slash"></i> Toggle Invisible
+                            </button>
+                            <button class="action-btn success">
+                                <i class="fas fa-heart"></i> Heal
+                            </button>
+                            <button class="action-btn success">
+                                <i class="fas fa-hand-holding-medical"></i> Revive
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Player Action Modal (Example) -->
+            <div id="player-modal" class="modal hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modal-player-name">John Doe</h2>
+                        <button class="close-btn" onclick="closePlayerModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="player-info">
+                            <p><strong>ID:</strong> <span id="modal-player-id">1</span></p>
+                            <p><strong>Job:</strong> <span id="modal-player-job">Police Officer</span></p>
+                            <p><strong>Money:</strong> $<span id="modal-player-money">5000</span></p>
+                        </div>
+                        
+                        <div class="modal-actions">
+                            <button class="action-btn">
+                                <i class="fas fa-location-arrow"></i> Teleport To
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-hand-holding"></i> Bring
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-eye"></i> Spectate
+                            </button>
+                            <button class="action-btn warning">
+                                <i class="fas fa-snowflake"></i> Freeze
+                            </button>
+                            <button class="action-btn success">
+                                <i class="fas fa-heart"></i> Heal
+                            </button>
+                            <button class="action-btn success">
+                                <i class="fas fa-hand-holding-medical"></i> Revive
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-dollar-sign"></i> Give Money
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-money-bill-wave"></i> Remove Money
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-briefcase"></i> Set Job
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-bell"></i> Notify
+                            </button>
+                            <button class="action-btn warning">
+                                <i class="fas fa-exclamation-triangle"></i> Warn
+                            </button>
+                            <button class="action-btn danger">
+                                <i class="fas fa-door-open"></i> Kick
+                            </button>
+                            <button class="action-btn danger">
+                                <i class="fas fa-ban"></i> Ban
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function switchTab(tabName) {
+            $('.tab').removeClass('active');
+            $(`.tab[data-tab="${tabName}"]`).addClass('active');
+            
+            $('.tab-content').removeClass('active');
+            $(`#${tabName}-tab`).addClass('active');
+        }
+
+        function openPlayerModal(name, id, job, money) {
+            $('#modal-player-name').text(name);
+            $('#modal-player-id').text(id);
+            $('#modal-player-job').text(job);
+            $('#modal-player-money').text(money);
+            $('#player-modal').removeClass('hidden');
+        }
+
+        function closePlayerModal() {
+            $('#player-modal').addClass('hidden');
+        }
+
+        // Close modal on ESC key
+        $(document).keyup(function(e) {
+            if (e.key === "Escape") {
+                closePlayerModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "welcome": "Welcome to the server!",
+  "player_loaded": "Player loaded successfully",
+  "money_added": "Added %s to your %s",
+  "money_removed": "Removed %s from your %s",
+  "insufficient_funds": "Insufficient funds",
+  "job_updated": "Your job has been updated to %s - %s",
+  "save_success": "Data saved successfully",
+  "save_failed": "Failed to save data",
+  "invalid_input": "Invalid input",
+  "player_not_found": "Player not found",
+  "no_permission": "You don't have permission to do this"
+}

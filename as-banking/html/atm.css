@@ -1,0 +1,332 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: transparent;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* ATM Container */
+.atm-container {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ATM Machine */
+.atm-machine {
+    width: 450px;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border: 4px solid #3a3a3a;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ATM Header */
+.atm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background: rgba(139, 92, 246, 0.1);
+    border-radius: 10px;
+}
+
+.atm-logo {
+    font-size: 18px;
+    font-weight: 700;
+    color: #8B5CF6;
+    letter-spacing: 2px;
+}
+
+.atm-time {
+    font-size: 14px;
+    color: #9CA3AF;
+    font-family: 'Courier New', monospace;
+}
+
+/* ATM Screen */
+.atm-screen {
+    background: linear-gradient(180deg, #0a1929 0%, #051420 100%);
+    border: 3px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 25px;
+    min-height: 350px;
+    margin-bottom: 20px;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.screen-content {
+    text-align: center;
+}
+
+.welcome-text h2 {
+    color: #10B981;
+    font-size: 28px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.welcome-text p {
+    color: #9CA3AF;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.balance-display {
+    background: rgba(16, 185, 129, 0.1);
+    border: 2px solid rgba(16, 185, 129, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.balance-label {
+    color: #10B981;
+    font-size: 12px;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.balance-amount {
+    color: #10B981;
+    font-size: 36px;
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+}
+
+/* Menu Options */
+.menu-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.menu-btn {
+    background: linear-gradient(145deg, #1a3a2a, #0d2a1a);
+    border: 2px solid rgba(16, 185, 129, 0.3);
+    border-radius: 10px;
+    color: #10B981;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.menu-btn:hover {
+    background: linear-gradient(145deg, #1a4a3a, #0d3a2a);
+    border-color: rgba(16, 185, 129, 0.5);
+    transform: translateY(-2px);
+}
+
+.menu-btn i {
+    font-size: 24px;
+}
+
+.menu-btn span {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Action Screen */
+.action-screen h3 {
+    color: #10B981;
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.quick-amounts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.amount-btn {
+    background: linear-gradient(145deg, #1a3a2a, #0d2a1a);
+    border: 2px solid rgba(16, 185, 129, 0.3);
+    border-radius: 8px;
+    color: #10B981;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.amount-btn:hover {
+    background: linear-gradient(145deg, #1a4a3a, #0d3a2a);
+    border-color: rgba(16, 185, 129, 0.5);
+}
+
+.custom-amount {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.custom-amount input {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(16, 185, 129, 0.3);
+    border-radius: 8px;
+    color: #10B981;
+    padding: 12px;
+    font-size: 16px;
+    font-family: 'Courier New', monospace;
+}
+
+.custom-amount input::placeholder {
+    color: rgba(16, 185, 129, 0.4);
+}
+
+.submit-btn {
+    background: linear-gradient(145deg, #10B981, #059669);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(145deg, #059669, #047857);
+}
+
+.back-btn {
+    background: rgba(139, 92, 246, 0.2);
+    border: 2px solid rgba(139, 92, 246, 0.3);
+    border-radius: 8px;
+    color: #8B5CF6;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+}
+
+.back-btn:hover {
+    background: rgba(139, 92, 246, 0.3);
+}
+
+/* Card Slot */
+.card-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.slot-light {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 10px #10B981;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.slot-label {
+    font-size: 11px;
+    color: #6B7280;
+    letter-spacing: 1px;
+}
+
+/* Keypad */
+.atm-keypad {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.keypad-display {
+    background: rgba(16, 185, 129, 0.1);
+    border: 2px solid rgba(16, 185, 129, 0.3);
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.keypad-display span {
+    color: #10B981;
+    font-size: 18px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 5px;
+}
+
+.keypad-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.key-btn {
+    background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+    border: 2px solid #4a4a4a;
+    border-radius: 6px;
+    color: #fff;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.key-btn:hover {
+    background: linear-gradient(145deg, #4a4a4a, #3a3a3a);
+}
+
+.key-btn:active {
+    transform: scale(0.95);
+}
+
+.key-btn.cancel {
+    background: linear-gradient(145deg, #8B5CF6, #7C3AED);
+    border-color: #8B5CF6;
+}
+
+.key-btn.enter {
+    background: linear-gradient(145deg, #10B981, #059669);
+    border-color: #10B981;
+}

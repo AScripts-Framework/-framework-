@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Ambulance Menu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="ambulanceMenu" class="menu-container" style="display: none;">
+        <div class="menu-header">
+            <div class="header-title">
+                <i class="fas fa-briefcase-medical"></i>
+                <h1>EMS Menu</h1>
+            </div>
+            <button class="close-btn" onclick="closeMenu()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="menu-content">
+            <!-- Actions Tab -->
+            <div class="menu-section">
+                <h2><i class="fas fa-hands-helping"></i> Patient Actions</h2>
+                <div class="action-grid">
+                    <button class="action-btn" onclick="action('revive')">
+                        <div class="action-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="action-label">Revive Patient</div>
+                        <div class="action-desc">Use defibrillator</div>
+                    </button>
+                    
+                    <button class="action-btn" onclick="action('heal')">
+                        <div class="action-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="action-label">Heal Patient</div>
+                        <div class="action-desc">Bandage wounds</div>
+                    </button>
+                    
+                    <button class="action-btn" onclick="action('vitals')">
+                        <div class="action-icon">
+                            <i class="fas fa-stethoscope"></i>
+                        </div>
+                        <div class="action-label">Check Vitals</div>
+                        <div class="action-desc">Examine patient</div>
+                    </button>
+                    
+                    <button class="action-btn" onclick="action('escort')">
+                        <div class="action-icon">
+                            <i class="fas fa-people-carry"></i>
+                        </div>
+                        <div class="action-label">Escort Patient</div>
+                        <div class="action-desc">Help patient walk</div>
+                    </button>
+                    
+                    <button class="action-btn" onclick="action('stretcher')">
+                        <div class="action-icon">
+                            <i class="fas fa-procedures"></i>
+                        </div>
+                        <div class="action-label">Place on Stretcher</div>
+                        <div class="action-desc">Load in ambulance</div>
+                    </button>
+                    
+                    <button class="action-btn" onclick="action('diagnose')">
+                        <div class="action-icon">
+                            <i class="fas fa-notes-medical"></i>
+                        </div>
+                        <div class="action-label">Diagnose</div>
+                        <div class="action-desc">View injuries</div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="menu-section">
+                <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                <div class="quick-actions">
+                    <button class="quick-btn" onclick="action('announce')">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>EMS Announcement</span>
+                    </button>
+                    <button class="quick-btn" onclick="action('callsign')">
+                        <i class="fas fa-id-badge"></i>
+                        <span>Set Callsign</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Status Info -->
+            <div class="menu-section">
+                <h2><i class="fas fa-info-circle"></i> Status</h2>
+                <div class="status-grid">
+                    <div class="status-item">
+                        <i class="fas fa-user-md"></i>
+                        <div class="status-info">
+                            <div class="status-label">On Duty</div>
+                            <div class="status-value" id="dutyStatus">Yes</div>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <i class="fas fa-users"></i>
+                        <div class="status-info">
+                            <div class="status-label">EMS Online</div>
+                            <div class="status-value" id="emsCount">1</div>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="status-info">
+                            <div class="status-label">Active Calls</div>
+                            <div class="status-value" id="callCount">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="menu-footer">
+            <p>Press <kbd>F6</kbd> to close menu</p>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>

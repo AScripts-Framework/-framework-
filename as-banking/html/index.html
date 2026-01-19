@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Banking</title>
+</head>
+<body>
+    <iframe id="contentFrame" style="width: 100vw; height: 100vh; border: none;"></iframe>
+    
+    <script>
+        window.addEventListener('message', function(event) {
+            const data = event.data;
+            const frame = document.getElementById('contentFrame');
+            
+            if (data.action === 'openATM') {
+                frame.src = 'atm.html';
+                setTimeout(() => {
+                    frame.contentWindow.postMessage(data, '*');
+                }, 100);
+            } else if (data.action === 'openBank') {
+                frame.src = 'bank.html';
+                setTimeout(() => {
+                    frame.contentWindow.postMessage(data, '*');
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>

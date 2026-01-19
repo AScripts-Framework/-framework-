@@ -1,0 +1,118 @@
+$engine: 3
+$onesync: on
+name: AS Framework
+version: 1.0.0
+author: AS Development Team
+description: Advanced FiveM RP framework with modular design, banking, jobs, and extensive customization
+
+tasks:
+  #  Download Base Files
+  - action: download_github
+    src: https://github.com/AScripts-Framework/as-core
+    ref: main
+    dest: ./tmp/as-framework
+
+  - action: move_path
+    src: ./tmp/as-framework/server.cfg
+    dest: ./server.cfg
+
+  # Prepare Database
+  - action: connect_database
+  - action: query_database
+    file: ./as-core.sql
+
+  # STANDALONE DEPENDENCIES
+  - action: download_github
+    src: https://github.com/citizenfx/cfx-server-data
+    subpath: resources
+    dest: ./resources/[cfx-default]
+  
+  - action: remove_path
+    path: ./resources/[cfx-default]/[gameplay]/chat
+
+  - action: download_file
+    path: ./tmp/files/oxmysql.zip
+    url: https://github.com/overextended/oxmysql/releases/download/v2.12.0/oxmysql.zip
+  
+  - action: unzip
+    dest: ./resources/[standalone]
+    src: ./tmp/files/oxmysql.zip
+
+  - action: download_github
+    dest: ./resources/[standalone]/screenshot-basic
+    ref: master
+    src: https://github.com/citizenfx/screenshot-basic
+
+  - action: download_github
+    dest: ./resources/[standalone]/bob74_ipl
+    ref: master
+    src: https://github.com/Bob74/bob74_ipl
+
+  - action: waste_time # prevent github throttling
+    seconds: 10
+
+  # VOICE
+  - action: download_github
+    dest: ./resources/[voice]/pma-voice
+    ref: main
+    src: https://github.com/AvarianKnight/pma-voice
+
+  # AS FRAMEWORK CORE
+  - action: download_github
+    dest: ./resources/[as]/as-core
+    ref: main
+    src: https://github.com/AScripts-Framework/as-core
+
+  - action: download_github
+    dest: ./resources/[as]/as-spawn
+    ref: main
+    src: https://github.com/AScripts-Framework/as-spawn
+
+  - action: download_github
+    dest: ./resources/[as]/as-target
+    ref: main
+    src: https://github.com/AScripts-Framework/as-target
+
+  - action: download_github
+    dest: ./resources/[as]/as-hud
+    ref: main
+    src: https://github.com/AScripts-Framework/as-hud
+    
+  - action: download_github
+    dest: ./resources/[as]/as-anticheat
+    ref: main
+    src: https://github.com/AScripts-Framework/as-anticheat
+
+  - action: download_github
+    dest: ./resources/[as]/as-admin
+    ref: main
+    src: https://github.com/AScripts-Framework/as-admin
+
+  - action: waste_time # prevent github throttling
+    seconds: 10
+
+  # AS FRAMEWORK JOBS
+  - action: download_github
+    dest: ./resources/[as]/as-police
+    ref: main
+    src: https://github.com/AScripts-Framework/as-police
+
+  - action: download_github
+    dest: ./resources/[as]/as-ambulance
+    ref: main
+    src: https://github.com/AScripts-Framework/as-ambulance
+
+  # AS FRAMEWORK SYSTEMS
+  - action: download_github
+    dest: ./resources/[as]/as-banking
+    ref: main
+    src: https://github.com/AScripts-Framework/as-banking
+
+  - action: download_github
+    dest: ./resources/[as]/as-loading
+    ref: main
+    src: https://github.com/AScripts-Framework/as-loading
+
+  # Clean up
+  - action: remove_path
+    path: ./tmp

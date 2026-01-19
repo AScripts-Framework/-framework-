@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATM</title>
+    <link rel="stylesheet" href="atm.css">
+</head>
+<body>
+    <div id="atmContainer" class="atm-container" style="display: none;">
+        <!-- ATM Machine -->
+        <div class="atm-machine">
+            <!-- ATM Header -->
+            <div class="atm-header">
+                <div class="atm-logo">AS BANK</div>
+                <div class="atm-time" id="atmTime">00:00</div>
+            </div>
+
+            <!-- ATM Screen -->
+            <div class="atm-screen">
+                <!-- Welcome Screen -->
+                <div class="screen-content" id="welcomeScreen">
+                    <div class="welcome-text">
+                        <h2>Welcome</h2>
+                        <p id="accountName">Loading...</p>
+                    </div>
+                    <div class="balance-display">
+                        <div class="balance-label">Available Balance</div>
+                        <div class="balance-amount" id="atmBalance">$0</div>
+                    </div>
+                </div>
+
+                <!-- Menu Options -->
+                <div class="menu-options" id="menuOptions">
+                    <button class="menu-btn" data-action="withdraw">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Withdraw</span>
+                    </button>
+                    <button class="menu-btn" data-action="deposit">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <span>Deposit</span>
+                    </button>
+                    <button class="menu-btn" data-action="balance">
+                        <i class="fas fa-wallet"></i>
+                        <span>Balance</span>
+                    </button>
+                    <button class="menu-btn" data-action="exit">
+                        <i class="fas fa-times-circle"></i>
+                        <span>Exit</span>
+                    </button>
+                </div>
+
+                <!-- Action Screen -->
+                <div class="action-screen" id="actionScreen" style="display: none;">
+                    <h3 id="actionTitle">Withdraw</h3>
+                    
+                    <!-- Quick Amounts -->
+                    <div class="quick-amounts" id="quickAmounts">
+                        <button class="amount-btn" data-amount="100">$100</button>
+                        <button class="amount-btn" data-amount="200">$200</button>
+                        <button class="amount-btn" data-amount="500">$500</button>
+                        <button class="amount-btn" data-amount="1000">$1,000</button>
+                        <button class="amount-btn" data-amount="2000">$2,000</button>
+                        <button class="amount-btn" data-amount="5000">$5,000</button>
+                    </div>
+
+                    <!-- Custom Amount -->
+                    <div class="custom-amount">
+                        <input type="number" id="customAmount" placeholder="Enter amount">
+                        <button class="submit-btn" id="submitBtn">Confirm</button>
+                    </div>
+
+                    <button class="back-btn" id="backBtn">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card Slot -->
+            <div class="card-slot">
+                <div class="slot-light"></div>
+                <div class="slot-label">INSERT CARD</div>
+            </div>
+
+            <!-- Keypad -->
+            <div class="atm-keypad">
+                <div class="keypad-display">
+                    <span id="pinDisplay">****</span>
+                </div>
+                <div class="keypad-buttons">
+                    <button class="key-btn" data-key="1">1</button>
+                    <button class="key-btn" data-key="2">2</button>
+                    <button class="key-btn" data-key="3">3</button>
+                    <button class="key-btn" data-key="4">4</button>
+                    <button class="key-btn" data-key="5">5</button>
+                    <button class="key-btn" data-key="6">6</button>
+                    <button class="key-btn" data-key="7">7</button>
+                    <button class="key-btn" data-key="8">8</button>
+                    <button class="key-btn" data-key="9">9</button>
+                    <button class="key-btn cancel" data-key="C">C</button>
+                    <button class="key-btn" data-key="0">0</button>
+                    <button class="key-btn enter" data-key="E">✓</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="atm.js"></script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Admin Menu</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="menu" class="hidden">
+        <div class="menu-container">
+            <!-- Header -->
+            <div class="menu-header">
+                <h1><i class="fas fa-shield-halved"></i> AS Admin Menu</h1>
+                <button class="close-btn" onclick="closeMenu()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="menu-tabs">
+                <button class="tab active" data-tab="players" onclick="switchTab('players')">
+                    <i class="fas fa-users"></i> Players
+                </button>
+                <button class="tab" data-tab="teleport" onclick="switchTab('teleport')">
+                    <i class="fas fa-map-marked-alt"></i> Teleport
+                </button>
+                <button class="tab" data-tab="vehicle" onclick="switchTab('vehicle')">
+                    <i class="fas fa-car"></i> Vehicle
+                </button>
+                <button class="tab" data-tab="server" onclick="switchTab('server')">
+                    <i class="fas fa-server"></i> Server
+                </button>
+                <button class="tab" data-tab="self" onclick="switchTab('self')">
+                    <i class="fas fa-user"></i> Self
+                </button>
+            </div>
+
+            <!-- Content Panels -->
+            <div class="menu-content">
+                <!-- Players Tab -->
+                <div class="tab-content active" id="players-tab">
+                    <div class="search-bar">
+                        <input type="text" id="player-search" placeholder="Search players..." onkeyup="searchPlayers()">
+                        <button onclick="refreshPlayers()"><i class="fas fa-refresh"></i></button>
+                    </div>
+                    
+                    <div class="player-list" id="player-list">
+                        <!-- Players will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Teleport Tab -->
+                <div class="tab-content" id="teleport-tab">
+                    <h3>Quick Locations</h3>
+                    <div class="teleport-grid">
+                        <button class="action-btn" onclick="teleportToLocation('LSPD')">
+                            <i class="fas fa-building-shield"></i> LSPD
+                        </button>
+                        <button class="action-btn" onclick="teleportToLocation('Hospital')">
+                            <i class="fas fa-hospital"></i> Hospital
+                        </button>
+                        <button class="action-btn" onclick="teleportToLocation('Garage')">
+                            <i class="fas fa-warehouse"></i> Garage
+                        </button>
+                        <button class="action-btn" onclick="teleportToLocation('Airport')">
+                            <i class="fas fa-plane"></i> Airport
+                        </button>
+                        <button class="action-btn" onclick="teleportToLocation('Beach')">
+                            <i class="fas fa-umbrella-beach"></i> Beach
+                        </button>
+                        <button class="action-btn" onclick="teleportToLocation('LifeInvader')">
+                            <i class="fas fa-building"></i> LifeInvader
+                        </button>
+                        <button class="action-btn" onclick="teleportToLocation('MazeBank')">
+                            <i class="fas fa-landmark"></i> Maze Bank
+                        </button>
+                        <button class="action-btn" onclick="teleportToLocation('Casino')">
+                            <i class="fas fa-dice"></i> Casino
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Vehicle Tab -->
+                <div class="tab-content" id="vehicle-tab">
+                    <div class="vehicle-actions">
+                        <input type="text" id="vehicle-model" placeholder="Enter vehicle model..." class="input-field">
+                        <button class="action-btn primary" onclick="spawnVehicle()">
+                            <i class="fas fa-plus"></i> Spawn Vehicle
+                        </button>
+                        <button class="action-btn success" onclick="repairVehicle()">
+                            <i class="fas fa-wrench"></i> Repair Vehicle
+                        </button>
+                        <button class="action-btn danger" onclick="deleteVehicle()">
+                            <i class="fas fa-trash"></i> Delete Vehicle
+                        </button>
+                    </div>
+                    
+                    <h3>Quick Spawn</h3>
+                    <div class="vehicle-grid">
+                        <button class="vehicle-btn" onclick="quickSpawnVehicle('adder')">Adder</button>
+                        <button class="vehicle-btn" onclick="quickSpawnVehicle('t20')">T20</button>
+                        <button class="vehicle-btn" onclick="quickSpawnVehicle('zentorno')">Zentorno</button>
+                        <button class="vehicle-btn" onclick="quickSpawnVehicle('nero')">Nero</button>
+                        <button class="vehicle-btn" onclick="quickSpawnVehicle('infernus')">Infernus</button>
+                        <button class="vehicle-btn" onclick="quickSpawnVehicle('italigtb')">Itali GTB</button>
+                    </div>
+                </div>
+
+                <!-- Server Tab -->
+                <div class="tab-content" id="server-tab">
+                    <h3>Weather Control</h3>
+                    <div class="weather-grid">
+                        <button class="action-btn" onclick="setWeather('CLEAR')">Clear</button>
+                        <button class="action-btn" onclick="setWeather('EXTRASUNNY')">Extra Sunny</button>
+                        <button class="action-btn" onclick="setWeather('CLOUDS')">Clouds</button>
+                        <button class="action-btn" onclick="setWeather('OVERCAST')">Overcast</button>
+                        <button class="action-btn" onclick="setWeather('RAIN')">Rain</button>
+                        <button class="action-btn" onclick="setWeather('THUNDER')">Thunder</button>
+                        <button class="action-btn" onclick="setWeather('SNOW')">Snow</button>
+                        <button class="action-btn" onclick="setWeather('BLIZZARD')">Blizzard</button>
+                    </div>
+
+                    <h3>Time Control</h3>
+                    <div class="time-control">
+                        <input type="number" id="time-hour" min="0" max="23" placeholder="Hour" class="input-field small">
+                        <input type="number" id="time-minute" min="0" max="59" placeholder="Minute" class="input-field small">
+                        <button class="action-btn primary" onclick="setTime()">
+                            <i class="fas fa-clock"></i> Set Time
+                        </button>
+                    </div>
+
+                    <h3>Server Announcement</h3>
+                    <div class="announcement">
+                        <textarea id="announcement-text" placeholder="Enter announcement message..." class="textarea-field"></textarea>
+                        <button class="action-btn primary" onclick="sendAnnouncement()">
+                            <i class="fas fa-bullhorn"></i> Send Announcement
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Self Tab -->
+                <div class="tab-content" id="self-tab">
+                    <div class="self-actions">
+                        <button class="action-btn primary" onclick="toggleNoclip()">
+                            <i class="fas fa-ghost"></i> Toggle Noclip
+                        </button>
+                        <button class="action-btn primary" onclick="toggleGod()">
+                            <i class="fas fa-shield"></i> Toggle Godmode
+                        </button>
+                        <button class="action-btn primary" onclick="toggleInvisible()">
+                            <i class="fas fa-eye-slash"></i> Toggle Invisible
+                        </button>
+                        <button class="action-btn success" onclick="healSelf()">
+                            <i class="fas fa-heart"></i> Heal
+                        </button>
+                        <button class="action-btn success" onclick="reviveSelf()">
+                            <i class="fas fa-hand-holding-medical"></i> Revive
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Player Action Modal -->
+        <div id="player-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-player-name">Player Actions</h2>
+                    <button class="close-btn" onclick="closePlayerModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="player-info">
+                        <p><strong>ID:</strong> <span id="modal-player-id"></span></p>
+                        <p><strong>Job:</strong> <span id="modal-player-job"></span></p>
+                        <p><strong>Money:</strong> $<span id="modal-player-money"></span></p>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button class="action-btn" onclick="teleportToPlayer()">
+                            <i class="fas fa-location-arrow"></i> Teleport To
+                        </button>
+                        <button class="action-btn" onclick="bringPlayer()">
+                            <i class="fas fa-hand-holding"></i> Bring
+                        </button>
+                        <button class="action-btn" onclick="spectatePlayer()">
+                            <i class="fas fa-eye"></i> Spectate
+                        </button>
+                        <button class="action-btn warning" onclick="freezePlayer()">
+                            <i class="fas fa-snowflake"></i> Freeze
+                        </button>
+                        <button class="action-btn success" onclick="healPlayer()">
+                            <i class="fas fa-heart"></i> Heal
+                        </button>
+                        <button class="action-btn success" onclick="revivePlayer()">
+                            <i class="fas fa-hand-holding-medical"></i> Revive
+                        </button>
+                        <button class="action-btn warning" onclick="warnPlayerModal()">
+                            <i class="fas fa-exclamation-triangle"></i> Warn
+                        </button>
+                        <button class="action-btn danger" onclick="kickPlayerModal()">
+                            <i class="fas fa-door-open"></i> Kick
+                        </button>
+                        <button class="action-btn danger" onclick="banPlayerModal()">
+                            <i class="fas fa-ban"></i> Ban
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Banking - In-Game Preview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .preview-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .preview-title {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(139, 92, 246, 0.2);
+            border: 2px solid #8B5CF6;
+            padding: 10px 30px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: 700;
+            z-index: 10;
+        }
+
+        .game-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ATM Preview */
+        .atm-preview {
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            width: 600px;
+            height: 800px;
+            background: #000;
+            border: 3px solid #00ff41;
+            border-radius: 12px;
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.4);
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .atm-header {
+            background: linear-gradient(180deg, #003300 0%, #001a00 100%);
+            padding: 20px;
+            border-bottom: 2px solid #00ff41;
+            text-align: center;
+        }
+
+        .atm-title {
+            color: #00ff41;
+            font-size: 28px;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 10px #00ff41;
+        }
+
+        .atm-account-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            color: #00ff41;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .atm-content {
+            padding: 30px;
+            background: #001a00;
+            height: calc(100% - 90px);
+            overflow-y: auto;
+        }
+
+        .atm-balance {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid #00ff41;
+            border-radius: 8px;
+        }
+
+        .atm-balance-label {
+            color: #00ff41;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .atm-balance-amount {
+            color: #00ff41;
+            font-size: 36px;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 10px #00ff41;
+        }
+
+        .atm-menu {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .atm-menu-item {
+            background: rgba(0, 255, 65, 0.1);
+            border: 2px solid #00ff41;
+            padding: 20px;
+            text-align: center;
+            color: #00ff41;
+            font-size: 18px;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .atm-menu-item:hover {
+            background: rgba(0, 255, 65, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+        }
+
+        /* Bank Preview */
+        .bank-preview {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 1200px;
+            height: 800px;
+            background: #1a1a2e;
+            border-radius: 12px;
+            box-shadow: 0 10px 50px rgba(139, 92, 246, 0.4);
+            display: flex;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .bank-sidebar {
+            width: 250px;
+            background: linear-gradient(180deg, #2e1065 0%, #1e0b4d 100%);
+            border-right: 2px solid #8B5CF6;
+            padding: 30px 20px;
+        }
+
+        .bank-logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .bank-logo-text {
+            color: #8B5CF6;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .bank-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .bank-nav-item {
+            padding: 15px 20px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 8px;
+            color: #b0b0b0;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .bank-nav-item.active,
+        .bank-nav-item:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: #8B5CF6;
+            color: #fff;
+        }
+
+        .bank-main {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .bank-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .bank-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #8B5CF6;
+        }
+
+        .bank-account-id {
+            color: #b0b0b0;
+            font-size: 14px;
+        }
+
+        .bank-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .bank-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(109, 40, 217, 0.2) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .bank-card-title {
+            font-size: 14px;
+            color: #b0b0b0;
+            margin-bottom: 10px;
+        }
+
+        .bank-card-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #8B5CF6;
+        }
+
+        .bank-transactions {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .bank-transactions-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #8B5CF6;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.2s;
+        }
+
+        .transaction-item:hover {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .transaction-info {
+            flex: 1;
+        }
+
+        .transaction-type {
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .transaction-desc {
+            font-size: 12px;
+            color: #b0b0b0;
+        }
+
+        .transaction-amount {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .transaction-amount.positive {
+            color: #10B981;
+        }
+
+        .transaction-amount.negative {
+            color: #EF4444;
+        }
+
+        /* Environment */
+        .game-environment {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 65, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.1) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(0, 0, 0, 0.1) 3px
+            );
+            pointer-events: none;
+            animation: scanlines 10s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #b0b0b0;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .instruction-key {
+            display: inline-block;
+            background: rgba(139, 92, 246, 0.3);
+            border: 1px solid #8B5CF6;
+            padding: 3px 10px;
+            border-radius: 4px;
+            margin: 0 5px;
+            color: #8B5CF6;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ATM Section -->
+        <div class="preview-section">
+            <div class="preview-title">🏧 ATM Interface (In-Game)</div>
+            <div class="game-screen">
+                <div class="game-environment"></div>
+                <div class="scanline"></div>
+                
+                <div class="atm-preview">
+                    <div class="atm-header">
+                        <div class="atm-title">ATM SERVICES</div>
+                        <div class="atm-account-info">
+                            <span>ACCOUNT: 1234-5678</span>
+                            <span>TIME: 14:32</span>
+                        </div>
+                    </div>
+                    <div class="atm-content">
+                        <div class="atm-balance">
+                            <div class="atm-balance-label">CURRENT BALANCE</div>
+                            <div class="atm-balance-amount">$12,543</div>
+                        </div>
+                        <div class="atm-menu">
+                            <div class="atm-menu-item">&gt; WITHDRAW CASH</div>
+                            <div class="atm-menu-item">&gt; DEPOSIT CASH</div>
+                            <div class="atm-menu-item">&gt; TRANSFER FUNDS</div>
+                            <div class="atm-menu-item">&gt; CHECK BALANCE</div>
+                            <div class="atm-menu-item">&gt; CHANGE PIN</div>
+                            <div class="atm-menu-item">&gt; MANAGE CARDS</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    Target ATM or press <span class="instruction-key">E</span> when near • <span class="instruction-key">ESC</span> to close
+                </div>
+            </div>
+        </div>
+
+        <!-- Bank Section -->
+        <div class="preview-section">
+            <div class="preview-title">🏦 Bank Interface (In-Game)</div>
+            <div class="game-screen">
+                <div class="game-environment"></div>
+                <div class="scanline"></div>
+                
+                <div class="bank-preview">
+                    <div class="bank-sidebar">
+                        <div class="bank-logo">
+                            <div class="bank-logo-text">AS BANK</div>
+                        </div>
+                        <div class="bank-nav">
+                            <div class="bank-nav-item active">📊 Dashboard</div>
+                            <div class="bank-nav-item">💵 Deposit</div>
+                            <div class="bank-nav-item">💸 Withdraw</div>
+                            <div class="bank-nav-item">🔄 Transfer</div>
+                            <div class="bank-nav-item">💳 Cards</div>
+                            <div class="bank-nav-item">💰 Loans</div>
+                        </div>
+                    </div>
+                    <div class="bank-main">
+                        <div class="bank-header">
+                            <div>
+                                <div class="bank-title">Account Overview</div>
+                                <div class="bank-account-id">ID: ABC12345</div>
+                            </div>
+                        </div>
+                        <div class="bank-cards">
+                            <div class="bank-card">
+                                <div class="bank-card-title">Bank Balance</div>
+                                <div class="bank-card-value">$45,230</div>
+                            </div>
+                            <div class="bank-card">
+                                <div class="bank-card-title">Cash on Hand</div>
+                                <div class="bank-card-value">$1,543</div>
+                            </div>
+                        </div>
+                        <div class="bank-transactions">
+                            <div class="bank-transactions-title">Recent Transactions</div>
+                            <div class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-type">DEPOSIT</div>
+                                    <div class="transaction-desc">Cash deposit - Jan 16, 2026 14:30</div>
+                                </div>
+                                <div class="transaction-amount positive">+$5,000</div>
+                            </div>
+                            <div class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-type">WITHDRAW</div>
+                                    <div class="transaction-desc">ATM withdrawal - Jan 16, 2026 12:15</div>
+                                </div>
+                                <div class="transaction-amount negative">-$500</div>
+                            </div>
+                            <div class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-type">TRANSFER</div>
+                                    <div class="transaction-desc">Transfer to John Doe - Jan 15, 2026 18:45</div>
+                                </div>
+                                <div class="transaction-amount negative">-$2,000</div>
+                            </div>
+                            <div class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-type">LOAN</div>
+                                    <div class="transaction-desc">Loan approved - Jan 14, 2026 10:00</div>
+                                </div>
+                                <div class="transaction-amount positive">+$10,000</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    Target Bank Teller or press <span class="instruction-key">E</span> when near • <span class="instruction-key">ESC</span> to close
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

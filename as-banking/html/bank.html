@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank</title>
+    <link rel="stylesheet" href="bank.css">
+</head>
+<body>
+    <div id="bankContainer" class="bank-container" style="display: none;">
+        <!-- Bank Interface -->
+        <div class="bank-window">
+            <!-- Header -->
+            <div class="bank-header">
+                <div class="bank-logo">
+                    <i class="fas fa-university"></i>
+                    <span>AS BANK</span>
+                </div>
+                <div class="account-info">
+                    <div class="account-name" id="accountName">Loading...</div>
+                    <div class="account-id" id="accountId">ID: ---</div>
+                </div>
+                <button class="close-btn" id="closeBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Main Content -->
+            <div class="bank-content">
+                <!-- Sidebar -->
+                <div class="bank-sidebar">
+                    <button class="sidebar-btn active" data-tab="overview">
+                        <i class="fas fa-home"></i>
+                        <span>Overview</span>
+                    </button>
+                    <button class="sidebar-btn" data-tab="deposit">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <span>Deposit</span>
+                    </button>
+                    <button class="sidebar-btn" data-tab="withdraw">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Withdraw</span>
+                    </button>
+                    <button class="sidebar-btn" data-tab="transfer">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Transfer</span>
+                    </button>
+                    <button class="sidebar-btn" data-tab="transactions">
+                        <i class="fas fa-list"></i>
+                        <span>Transactions</span>
+                    </button>
+                    <button class="sidebar-btn" data-tab="loans">
+                        <i class="fas fa-hand-holding-dollar"></i>
+                        <span>Loans</span>
+                    </button>
+                    <button class="sidebar-btn" data-tab="card">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Card</span>
+                    </button>
+                </div>
+
+                <!-- Main Area -->
+                <div class="bank-main">
+                    <!-- Overview Tab -->
+                    <div class="tab-content active" id="overviewTab">
+                        <h2>Account Overview</h2>
+                        
+                        <div class="balance-cards">
+                            <div class="balance-card">
+                                <div class="card-icon bank-icon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div class="card-info">
+                                    <div class="card-label">Bank Balance</div>
+                                    <div class="card-value" id="bankBalance">$0</div>
+                                </div>
+                            </div>
+                            
+                            <div class="balance-card">
+                                <div class="card-icon cash-icon">
+                                    <i class="fas fa-wallet"></i>
+                                </div>
+                                <div class="card-info">
+                                    <div class="card-label">Cash on Hand</div>
+                                    <div class="card-value" id="cashBalance">$0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quick-actions">
+                            <h3>Quick Actions</h3>
+                            <div class="action-grid">
+                                <button class="action-btn" data-action="deposit">
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                    <span>Deposit Cash</span>
+                                </button>
+                                <button class="action-btn" data-action="withdraw">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <span>Withdraw</span>
+                                </button>
+                                <button class="action-btn" data-action="transfer">
+                                    <i class="fas fa-exchange-alt"></i>
+                                    <span>Transfer</span>
+                                </button>
+                                <button class="action-btn" data-action="transactions">
+                                    <i class="fas fa-list"></i>
+                                    <span>Statement</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="recent-transactions">
+                            <h3>Recent Transactions</h3>
+                            <div id="recentList"></div>
+                        </div>
+                    </div>
+
+                    <!-- Deposit Tab -->
+                    <div class="tab-content" id="depositTab">
+                        <h2>Deposit Cash</h2>
+                        <p class="tab-description">Deposit cash from your pocket into your bank account</p>
+                        
+                        <div class="transaction-form">
+                            <div class="form-group">
+                                <label>Amount to Deposit</label>
+                                <input type="number" id="depositAmount" placeholder="Enter amount">
+                            </div>
+                            <button class="submit-btn" id="depositBtn">Deposit</button>
+                        </div>
+                    </div>
+
+                    <!-- Withdraw Tab -->
+                    <div class="tab-content" id="withdrawTab">
+                        <h2>Withdraw Cash</h2>
+                        <p class="tab-description">Withdraw cash from your bank account</p>
+                        
+                        <div class="transaction-form">
+                            <div class="form-group">
+                                <label>Amount to Withdraw</label>
+                                <input type="number" id="withdrawAmount" placeholder="Enter amount">
+                            </div>
+                            <button class="submit-btn" id="withdrawBtn">Withdraw</button>
+                        </div>
+                    </div>
+
+                    <!-- Transfer Tab -->
+                    <div class="tab-content" id="transferTab">
+                        <h2>Transfer Funds</h2>
+                        <p class="tab-description">Transfer money to another citizen's account</p>
+                        
+                        <div class="transaction-form">
+                            <div class="form-group">
+                                <label>Recipient Citizen ID</label>
+                                <input type="text" id="transferTarget" placeholder="Enter citizen ID">
+                            </div>
+                            <div class="form-group">
+                                <label>Amount to Transfer</label>
+                                <input type="number" id="transferAmount" placeholder="Enter amount">
+                            </div>
+                            <button class="submit-btn" id="transferBtn">Transfer</button>
+                        </div>
+                    </div>
+
+                    <!-- Transactions Tab -->
+                    <div class="tab-content" id="transactionsTab">
+                        <h2>Transaction History</h2>
+                        <div id="transactionsList"></div>
+                    </div>
+
+                    <!-- Loans Tab -->
+                    <div class="tab-content" id="loansTab">
+                        <h2>Loans</h2>
+                        
+                        <div id="activeLoans"></div>
+                        
+                        <div class="loan-request">
+                            <h3>Request New Loan</h3>
+                            <div class="transaction-form">
+                                <div class="form-group">
+                                    <label>Loan Amount</label>
+                                    <input type="number" id="loanAmount" placeholder="Enter amount">
+                                </div>
+                                <p class="loan-info">Interest Rate: 5% | Payment Period: 7 days</p>
+                                <button class="submit-btn" id="loanBtn">Request Loan</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Tab -->
+                    <div class="tab-content" id="cardTab">
+                        <h2>Bank Card</h2>
+                        <div id="cardInfo"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="bank.js"></script>
+</body>
+</html>

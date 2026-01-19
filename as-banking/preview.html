@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Banking - Preview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #8B5CF6;
+        }
+
+        .feature-card p {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        .preview-section {
+            margin: 60px 0;
+        }
+
+        .preview-section h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #8B5CF6;
+        }
+
+        .ui-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .ui-preview {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .ui-preview h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ui-preview img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .ui-features {
+            margin-top: 20px;
+        }
+
+        .ui-features ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .ui-features li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #b0b0b0;
+        }
+
+        .ui-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10B981;
+            font-weight: bold;
+        }
+
+        .specs {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+
+        .specs h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #8B5CF6;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .spec-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .spec-item strong {
+            color: #8B5CF6;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .installation {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+
+        .installation h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #10B981;
+        }
+
+        .installation ol {
+            padding-left: 25px;
+            line-height: 2;
+        }
+
+        .installation li {
+            margin-bottom: 10px;
+        }
+
+        code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #10B981;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #8B5CF6;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            margin-top: 60px;
+        }
+
+        .footer p {
+            color: #b0b0b0;
+            margin-bottom: 10px;
+        }
+
+        .ui-mockup {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .atm-mockup {
+            background: linear-gradient(135deg, #001a00 0%, #003300 100%);
+            border: 3px solid #00ff41;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+        }
+
+        .atm-mockup:before {
+            content: "ATM INTERFACE";
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #00ff41;
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .bank-mockup {
+            background: linear-gradient(135deg, #2e1065 0%, #1e0b4d 100%);
+            border: 3px solid #8B5CF6;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .bank-mockup:before {
+            content: "BANK INTERFACE";
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #8B5CF6;
+            font-family: 'Inter', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .mockup-content {
+            color: #b0b0b0;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 60px;
+        }
+
+        .locations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .location-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #8B5CF6;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>💰 AS Banking</h1>
+        <p>Modern Banking System for AS Framework</p>
+    </div>
+
+    <div class="container">
+        <!-- Features -->
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🏧</div>
+                <h3>Dual UI System</h3>
+                <p>Terminal-style ATM for quick transactions and professional bank interface for comprehensive banking services.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💳</div>
+                <h3>Bank Cards</h3>
+                <p>Request debit cards with PIN protection, manage multiple cards, and secure your finances.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💸</div>
+                <h3>Loan System</h3>
+                <p>Request loans with interest rates, track payments, and manage your debts through the banking system.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Transaction History</h3>
+                <p>Complete logging of all banking activities with timestamps and descriptions for full transparency.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Flexible Interaction</h3>
+                <p>Works with both target system (as-target) and text UI (ox_lib) - automatically adapts based on server configuration.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>15+ Locations</h3>
+                <p>6 bank branches and 15+ ATM locations strategically placed across Los Santos and Blaine County.</p>
+            </div>
+        </div>
+
+        <!-- UI Showcase -->
+        <div class="preview-section">
+            <h2>User Interfaces</h2>
+            
+            <div class="ui-showcase">
+                <!-- ATM UI -->
+                <div class="ui-preview">
+                    <h3>🏧 ATM Interface <span class="badge">Terminal Style</span></h3>
+                    <div class="ui-mockup atm-mockup">
+                        <div class="mockup-content">
+                            Green terminal-style interface<br>
+                            Matrix-inspired design<br>
+                            Scanline effects<br>
+                            Quick transactions
+                        </div>
+                    </div>
+                    <div class="ui-features">
+                        <ul>
+                            <li>Withdraw cash (with ATM limits)</li>
+                            <li>Deposit money</li>
+                            <li>Transfer funds to other players</li>
+                            <li>Check account balance</li>
+                            <li>Change PIN code</li>
+                            <li>Manage bank cards</li>
+                            <li>View recent transactions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Bank UI -->
+                <div class="ui-preview">
+                    <h3>🏦 Bank Interface <span class="badge">Professional</span></h3>
+                    <div class="ui-mockup bank-mockup">
+                        <div class="mockup-content">
+                            Professional purple theme<br>
+                            Sidebar navigation<br>
+                            Comprehensive features<br>
+                            Advanced banking
+                        </div>
+                    </div>
+                    <div class="ui-features">
+                        <ul>
+                            <li>Complete dashboard with overview</li>
+                            <li>All ATM operations plus more</li>
+                            <li>Request and manage loans</li>
+                            <li>Pay off loan balances</li>
+                            <li>Detailed transaction history</li>
+                            <li>Advanced card management</li>
+                            <li>Savings account features</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Specifications -->
+        <div class="specs">
+            <h3>📋 Technical Specifications</h3>
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <strong>Dependencies</strong>
+                    as-core, ox_lib, oxmysql, as-target (optional)
+                </div>
+                <div class="spec-item">
+                    <strong>Max Withdraw</strong>
+                    $50,000 per transaction
+                </div>
+                <div class="spec-item">
+                    <strong>Max Deposit</strong>
+                    $100,000 per transaction
+                </div>
+                <div class="spec-item">
+                    <strong>Max Transfer</strong>
+                    $25,000 per transaction
+                </div>
+                <div class="spec-item">
+                    <strong>Transfer Fee</strong>
+                    2% of transfer amount
+                </div>
+                <div class="spec-item">
+                    <strong>Card Fee</strong>
+                    $500 one-time fee
+                </div>
+                <div class="spec-item">
+                    <strong>Interest Rate</strong>
+                    0.05% on savings
+                </div>
+                <div class="spec-item">
+                    <strong>Daily Interest Limit</strong>
+                    $500 maximum
+                </div>
+            </div>
+        </div>
+
+        <!-- Locations -->
+        <div class="preview-section">
+            <h2>🗺️ Locations</h2>
+            
+            <h3 style="margin-top: 40px; margin-bottom: 20px;">Bank Branches (6 Locations)</h3>
+            <div class="locations">
+                <div class="location-item">Legion Square<br><small>Pillbox Hill</small></div>
+                <div class="location-item">Hawick Avenue<br><small>Downtown</small></div>
+                <div class="location-item">Del Perro Boulevard<br><small>West Side</small></div>
+                <div class="location-item">Great Ocean Highway<br><small>Coastal</small></div>
+                <div class="location-item">Paleto Bay<br><small>North County</small></div>
+                <div class="location-item">Blaine County Savings<br><small>Sandy Shores</small></div>
+            </div>
+
+            <h3 style="margin-top: 40px; margin-bottom: 20px;">ATM Locations (15+ ATMs)</h3>
+            <p style="color: #b0b0b0; margin-bottom: 20px;">ATMs strategically placed throughout Los Santos and Blaine County near gas stations, 24/7 stores, and popular locations.</p>
+        </div>
+
+        <!-- Installation -->
+        <div class="installation">
+            <h3>🚀 Quick Installation</h3>
+            <ol>
+                <li>Download and place <code>as-banking</code> in your resources folder</li>
+                <li>Import <code>database.sql</code> into your MySQL database</li>
+                <li>Add <code>setr as_use_target "1"</code> to server.cfg (or "0" for text UI)</li>
+                <li>Add <code>ensure as-banking</code> to server.cfg</li>
+                <li>Restart your server and enjoy!</li>
+            </ol>
+        </div>
+
+        <!-- Integration -->
+        <div class="specs">
+            <h3>🔌 Framework Integration</h3>
+            <p style="margin-bottom: 20px; color: #b0b0b0;">Seamlessly integrates with AS Framework:</p>
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <strong>Player System</strong>
+                    Uses AS.Server.GetPlayer()
+                </div>
+                <div class="spec-item">
+                    <strong>Money Management</strong>
+                    Integrated with AS core money functions
+                </div>
+                <div class="spec-item">
+                    <strong>Database</strong>
+                    MySQL with oxmysql wrapper
+                </div>
+                <div class="spec-item">
+                    <strong>UI Library</strong>
+                    ox_lib for notifications and text UI
+                </div>
+                <div class="spec-item">
+                    <strong>Target System</strong>
+                    as-target integration (optional)
+                </div>
+                <div class="spec-item">
+                    <strong>Callbacks</strong>
+                    ox_lib callbacks for client-server communication
+                </div>
+            </div>
+        </div>
+
+        <!-- Interaction Modes -->
+        <div class="preview-section">
+            <h2>🎮 Interaction Modes</h2>
+            
+            <div class="ui-showcase">
+                <div class="ui-preview">
+                    <h3>Target System <span class="badge">as_use_target = "1"</span></h3>
+                    <div class="ui-features">
+                        <ul>
+                            <li>Target ATMs and bank tellers</li>
+                            <li>Clean interaction with icons</li>
+                            <li>Eye/target icon appears on hover</li>
+                            <li>Requires as-target resource</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="ui-preview">
+                    <h3>Text UI <span class="badge">as_use_target = "0"</span></h3>
+                    <div class="ui-features">
+                        <ul>
+                            <li>Distance-based interaction</li>
+                            <li>Press E when prompted</li>
+                            <li>ox_lib text UI notifications</li>
+                            <li>Works without target system</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><strong>AS Banking</strong> - Part of AS Framework</p>
+        <p>Modern banking system with dual UI interfaces</p>
+        <p style="margin-top: 20px; color: #8B5CF6;">Building the future of FiveM roleplay 🚀</p>
+    </div>
+</body>
+</html>
