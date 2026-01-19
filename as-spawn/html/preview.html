@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Spawn - Browser Preview</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for browser preview */
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        .preview-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(30, 10, 60, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #00ff00;
+            z-index: 9999;
+        }
+        
+        .preview-controls h3 {
+            color: #E9D5FF;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .control-row {
+            margin-bottom: 10px;
+        }
+        
+        .control-row button {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .control-row button:hover {
+            background: #00cc00;
+        }
+        
+        .info-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(30, 10, 60, 0.95);
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #00ff00;
+            color: #E9D5FF;
+            font-size: 12px;
+            max-width: 300px;
+        }
+        
+        .info-box h4 {
+            margin-bottom: 10px;
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <!-- Preview Controls -->
+    <div class="preview-controls">
+        <h3>📋 Preview Controls</h3>
+        
+        <div class="control-row">
+            <button onclick="showSpawn()">Show Spawn UI</button>
+            <button onclick="hideSpawn()">Hide Spawn UI</button>
+        </div>
+    </div>
+    
+    <!-- Info Box -->
+    <div class="info-box">
+        <h4>ℹ️ Browser Preview Mode</h4>
+        <p>The spawn system uses ox_lib context menus which don't render in HTML preview.</p>
+        <p><strong>Note:</strong> Character selection and spawn menus appear in-game as native FiveM UI.</p>
+    </div>
+
+    <!-- Main Container -->
+    <div id="container" style="display: block;">
+        <div class="header">
+            <h1>AS Framework</h1>
+            <p>Character Selection</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Browser preview overrides
+        window.GetParentResourceName = function() {
+            return 'as-spawn';
+        };
+        
+        window.fetch = function(url, options) {
+            console.log('Fetch called:', url, options);
+            return Promise.resolve({ ok: true });
+        };
+        
+        // Preview controls
+        function showSpawn() {
+            document.getElementById('container').style.display = 'block';
+            document.getElementById('container').classList.add('show');
+        }
+        
+        function hideSpawn() {
+            document.getElementById('container').classList.remove('show');
+            setTimeout(() => {
+                document.getElementById('container').style.display = 'none';
+            }, 300);
+        }
+        
+        // Show by default for preview
+        showSpawn();
+    </script>
+</body>
+</html>

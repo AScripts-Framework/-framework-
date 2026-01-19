@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Framework Documentation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-shield-halved"></i>
+                <span>AS Framework</span>
+            </div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="nav" id="mainNav">
+                <a href="#overview">Overview</a>
+                <a href="#installation">Installation</a>
+                <a href="#resources">Resources</a>
+                <a href="https://github.com" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>AS Framework</h1>
+            <p class="subtitle">Modern, optimized FiveM framework built with ox_lib integration</p>
+            <div class="hero-buttons">
+                <a href="#installation" class="btn btn-primary">
+                    <i class="fas fa-download"></i> Get Started
+                </a>
+                <a href="#resources" class="btn btn-secondary">
+                    <i class="fas fa-book"></i> Documentation
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="section">
+        <div class="container">
+            <h2>Framework Overview</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Optimized Performance</h3>
+                    <p>Built with ox_lib and oxmysql for maximum efficiency and minimal resource usage.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <h3>Modular Design</h3>
+                    <p>12 integrated resources working seamlessly together, each handling specific functionality.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <h3>Centralized Config</h3>
+                    <p>All settings managed through convars.cfg for easy server configuration.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield"></i>
+                    </div>
+                    <h3>Built-in Security</h3>
+                    <p>Comprehensive anti-cheat system with progressive punishment and admin bypass.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Modern UI</h3>
+                    <p>Purple-themed interface across all resources with customizable settings.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Developer Friendly</h3>
+                    <p>Clean API, extensive exports, and comprehensive documentation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section id="installation" class="section alt-bg">
+        <div class="container">
+            <h2>Installation</h2>
+            <div class="install-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Install Dependencies</h3>
+                        <div class="code-block">
+                            <code>ensure oxmysql<br>ensure ox_lib</code>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Import Database</h3>
+                        <p>Import <code>as-core/database.sql</code> into your MySQL database</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Add to server.cfg</h3>
+                        <div class="code-block">
+                            <code>loadscreen 'as-loading'<br>ensure as-core<br>exec @as-core/convars.cfg<br>ensure as-loading<br>ensure as-spawn<br>ensure as-target<br>ensure as-hud<br>ensure as-fuel<br>ensure as-anticheat<br>ensure as-admin</code>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Configure Settings</h3>
+                        <p>Edit <code>as-core/convars.cfg</code> to customize framework settings</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="section">
+        <div class="container">
+            <h2>Framework Resources</h2>
+            
+            <!-- Mobile Resource Tabs -->
+            <div class="resource-tabs">
+                <button class="resource-tab active" data-resource="as-core">
+                    <i class="fas fa-cube"></i>
+                    <span>Core</span>
+                </button>
+                <button class="resource-tab" data-resource="as-spawn">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Spawn</span>
+                </button>
+                <button class="resource-tab" data-resource="as-target">
+                    <i class="fas fa-crosshairs"></i>
+                    <span>Target</span>
+                </button>
+                <button class="resource-tab" data-resource="as-hud">
+                    <i class="fas fa-desktop"></i>
+                    <span>HUD</span>
+                </button>
+                <button class="resource-tab" data-resource="as-fuel">
+                    <i class="fas fa-gas-pump"></i>
+                    <span>Fuel</span>
+                </button>
+                <button class="resource-tab" data-resource="as-anticheat">
+                    <i class="fas fa-shield-virus"></i>
+                    <span>AntiCheat</span>
+                </button>
+                <button class="resource-tab" data-resource="as-admin">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Admin</span>
+                </button>
+                <button class="resource-tab" data-resource="as-ambulance">
+                    <i class="fas fa-ambulance"></i>
+                    <span>Ambulance</span>
+                </button>
+                <button class="resource-tab" data-resource="as-police">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Police</span>
+                </button>
+                <button class="resource-tab" data-resource="as-drugs">
+                    <i class="fas fa-cannabis"></i>
+                    <span>Drugs</span>
+                </button>
+                <button class="resource-tab" data-resource="as-radio">
+                    <i class="fas fa-broadcast-tower"></i>
+                    <span>Radio</span>
+                </button>
+                <button class="resource-tab" data-resource="as-loading">
+                    <i class="fas fa-film"></i>
+                    <span>Loading</span>
+                </button>
+            </div>
+
+            <div class="resources-container">
+                <!-- Sidebar (Desktop) -->
+                <aside class="sidebar">
+                    <div class="sidebar-item active" data-resource="as-core">
+                        <i class="fas fa-cube"></i>
+                        <span>AS-Core</span>
+                    </div>
+                    <div class="sidebar-item" data-resource="as-spawn">
+                        <i class="fas fa-user-plus"></i>
+                        <span>AS-Spawn</span>
+                    </div>
+                    <div class="sidebar-item" data-resource="as-target">
+                        <i class="fas fa-crosshairs"></i>
+                        <span>AS-Target</span>
+                    </div>
+                    <div class="sidebar-item" data-resource="as-hud">
+                        <i class="fas fa-desktop"></i>
+                        <span>AS-HUD</span>
+                    </div>
+                    <div class="sidebar-item" data-resource="as-fuel">
+                        <i class="fas fa-gas-pump"></i>
+                        <span>AS-Fuel</span>
+                    </div>
+                    <div class="sidebar-item" data-resource="as-anticheat">
+                        <i class="fas fa-shield-virus"></i>
+                        <span>AS-AntiCheat</span>
+                    </div>
+                    <div class="sidebar-item" data-resource="as-admin">
+                        <i class="fas fa-user-shield"></i>
+                        <span>AS-Admin</span>
+                    </div>
+                    <div class="sidebar-item" data-resource="as-ambulance">
+                        <i class="fas fa-ambulance"></i>
+                        <span>AS-Ambulance</span>
+                    </div>
+                    <div class="sidebar-item" data-resource="as-police">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>AS-Police</span>
+                    </div>
+                    <div class="sidebar-item" data-resource="as-drugs">
+                        <i class="fas fa-cannabis"></i>
+                        <span>AS-Drugs</span>
+                    </div>
+                    <div class="sidebar-item" data-resource="as-radio">
+                        <i class="fas fa-broadcast-tower"></i>
+                        <span>AS-Radio</span>
+                    </div>
+                    <div class="sidebar-item" data-resource="as-loading">
+                        <i class="fas fa-film"></i>
+                        <span>AS-Loading</span>
+                    </div>
+                </aside>
+
+                <!-- Content Area -->
+                <main class="content" id="doc-content">
+                    <!-- Content will be loaded here -->
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>AS Framework</h4>
+                    <p>Modern FiveM framework built with ox_lib integration</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#resources">Documentation</a></li>
+                        <li><a href="#installation">Installation Guide</a></li>
+                        <li><a href="https://github.com">GitHub Repository</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="https://github.com/overextended/ox_lib">ox_lib</a></li>
+                        <li><a href="https://github.com/overextended/oxmysql">oxmysql</a></li>
+                        <li><a href="https://docs.fivem.net">FiveM Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AS Framework. MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

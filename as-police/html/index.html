@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Police MDT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Radar Display -->
+    <div id="radar" class="radar-container" style="display: none;">
+        <div class="radar-header">POLICE RADAR</div>
+        <div class="radar-readings">
+            <div class="radar-front">
+                <span class="label">FRONT</span>
+                <span class="speed" id="frontSpeed">0</span>
+                <span class="unit">MPH</span>
+            </div>
+            <div class="radar-rear">
+                <span class="label">REAR</span>
+                <span class="speed" id="rearSpeed">0</span>
+                <span class="unit">MPH</span>
+            </div>
+        </div>
+        <div class="radar-limit">LIMIT: <span id="speedLimit">80</span> MPH</div>
+    </div>
+
+    <!-- MDT Interface -->
+    <div id="mdt" class="mdt-container" style="display: none;">
+        <div class="mdt-header">
+            <h1>🚔 Mobile Data Terminal</h1>
+            <button class="close-btn" id="closeMDT">✕</button>
+        </div>
+        
+        <div class="mdt-nav">
+            <button class="nav-btn active" data-tab="dispatch">Dispatch</button>
+            <button class="nav-btn" data-tab="warrants">Warrants</button>
+            <button class="nav-btn" data-tab="reports">Reports</button>
+            <button class="nav-btn" data-tab="roster">Roster</button>
+        </div>
+
+        <div class="mdt-content">
+            <!-- Dispatch Tab -->
+            <div class="tab-content active" id="dispatch-tab">
+                <h2>Active Calls</h2>
+                <div id="dispatch-list" class="dispatch-list">
+                    <div class="empty-state">No active calls</div>
+                </div>
+            </div>
+
+            <!-- Warrants Tab -->
+            <div class="tab-content" id="warrants-tab">
+                <div class="warrant-header">
+                    <h2>Active Warrants</h2>
+                    <button class="btn-primary" id="createWarrant">Create Warrant</button>
+                </div>
+                <div id="warrants-list" class="warrants-list">
+                    <div class="empty-state">No active warrants</div>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div class="tab-content" id="reports-tab">
+                <h2>Police Reports</h2>
+                <div id="reports-list" class="reports-list">
+                    <div class="empty-state">No reports filed</div>
+                </div>
+            </div>
+
+            <!-- Roster Tab -->
+            <div class="tab-content" id="roster-tab">
+                <h2>Officer Roster</h2>
+                <div id="roster-list" class="roster-list">
+                    <div class="empty-state">No officers on duty</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Warrant Creation Modal -->
+    <div id="warrantModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>Create Warrant</h2>
+            <form id="warrantForm">
+                <div class="form-group">
+                    <label>Citizen ID</label>
+                    <input type="text" id="warrantIdentifier" required>
+                </div>
+                <div class="form-group">
+                    <label>Reason</label>
+                    <textarea id="warrantReason" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Expires In (hours)</label>
+                    <input type="number" id="warrantExpires" value="24" min="1" max="168" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Create</button>
+                    <button type="button" class="btn-secondary" id="cancelWarrant">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

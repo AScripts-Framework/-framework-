@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Target - Browser Preview</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for browser preview */
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+        
+        .preview-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(30, 10, 60, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #8B5CF6;
+            z-index: 9999;
+        }
+        
+        .preview-controls h3 {
+            color: #E9D5FF;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .control-row {
+            margin-bottom: 10px;
+        }
+        
+        .control-row button {
+            background: #8B5CF6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 5px;
+            font-size: 12px;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        
+        .control-row button:hover {
+            background: #A78BFA;
+        }
+        
+        .info-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(30, 10, 60, 0.95);
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #8B5CF6;
+            color: #E9D5FF;
+            font-size: 12px;
+            max-width: 300px;
+        }
+        
+        .info-box h4 {
+            margin-bottom: 10px;
+            color: #A78BFA;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Preview Controls -->
+    <div class="preview-controls">
+        <h3><i class="fa-solid fa-sliders"></i> Preview Controls</h3>
+        
+        <div class="control-row">
+            <button onclick="showEmpty()">Show Eye (No Target)</button>
+        </div>
+        
+        <div class="control-row">
+            <button onclick="showSingleOption()">Show Single Option</button>
+        </div>
+        
+        <div class="control-row">
+            <button onclick="showMultipleOptions()">Show Multiple Options</button>
+        </div>
+        
+        <div class="control-row">
+            <button onclick="showWithDistance()">Show With Distance</button>
+        </div>
+        
+        <div class="control-row">
+            <button onclick="hideTarget()">Hide Target</button>
+        </div>
+    </div>
+    
+    <!-- Info Box -->
+    <div class="info-box">
+        <h4><i class="fa-solid fa-info-circle"></i> Browser Preview Mode</h4>
+        <p>Controls:</p>
+        <ul>
+            <li><strong>E</strong> - Select highlighted option</li>
+            <li><strong>1-9</strong> - Quick select option</li>
+            <li><strong>↑/↓ or W/S</strong> - Navigate options</li>
+            <li><strong>Left Alt</strong> - Toggle eye (in-game)</li>
+        </ul>
+    </div>
+
+    <!-- Main Target Container -->
+    <div id="target-container" style="display: block;">
+        <!-- Center Eye Icon -->
+        <div id="target-eye">
+            <i class="fa-solid fa-eye"></i>
+        </div>
+
+        <!-- Options Menu -->
+        <div id="target-options">
+            <!-- Options will be dynamically added here -->
+        </div>
+
+        <!-- Distance Indicator -->
+        <div id="distance-indicator">2.5m</div>
+
+        <!-- Entity Label -->
+        <div id="entity-label">Player Name</div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Browser preview overrides
+        window.GetParentResourceName = function() {
+            return 'as-target';
+        };
+        
+        window.fetch = function(url, options) {
+            console.log('Option selected:', options.body);
+            return Promise.resolve({ ok: true });
+        };
+        
+        // Preview functions
+        function showEmpty() {
+            const event = new MessageEvent('message', {
+                data: {
+                    action: 'show'
+                }
+            });
+            window.dispatchEvent(event);
+            
+            setTimeout(() => {
+                const event2 = new MessageEvent('message', {
+                    data: {
+                        action: 'updateOptions',
+                        options: [],
+                        distance: null,
+                        label: null
+                    }
+                });
+                window.dispatchEvent(event2);
+            }, 50);
+        }
+        
+        function showSingleOption() {
+            const event = new MessageEvent('message', {
+                data: {
+                    action: 'show'
+                }
+            });
+            window.dispatchEvent(event);
+            
+            setTimeout(() => {
+                const event2 = new MessageEvent('message', {
+                    data: {
+                        action: 'updateOptions',
+                        options: [
+                            {
+                                icon: 'fa-solid fa-hand',
+                                label: 'Interact'
+                            }
+                        ],
+                        distance: null,
+                        label: null
+                    }
+                });
+                window.dispatchEvent(event2);
+            }, 50);
+        }
+        
+        function showMultipleOptions() {
+            const event = new MessageEvent('message', {
+                data: {
+                    action: 'show'
+                }
+            });
+            window.dispatchEvent(event);
+            
+            setTimeout(() => {
+                const event2 = new MessageEvent('message', {
+                    data: {
+                        action: 'updateOptions',
+                        options: [
+                            {
+                                icon: 'fa-solid fa-hand',
+                                label: 'Give Item'
+                            },
+                            {
+                                icon: 'fa-solid fa-comments',
+                                label: 'Talk'
+                            },
+                            {
+                                icon: 'fa-solid fa-handshake',
+                                label: 'Trade'
+                            },
+                            {
+                                icon: 'fa-solid fa-user-check',
+                                label: 'Check ID'
+                            }
+                        ],
+                        distance: 2.5,
+                        label: 'John Doe'
+                    }
+                });
+                window.dispatchEvent(event2);
+            }, 50);
+        }
+        
+        function showWithDistance() {
+            const event = new MessageEvent('message', {
+                data: {
+                    action: 'show'
+                }
+            });
+            window.dispatchEvent(event);
+            
+            setTimeout(() => {
+                const event2 = new MessageEvent('message', {
+                    data: {
+                        action: 'updateOptions',
+                        options: [
+                            {
+                                icon: 'fa-solid fa-door-open',
+                                label: 'Open Door'
+                            },
+                            {
+                                icon: 'fa-solid fa-lock',
+                                label: 'Lock/Unlock'
+                            }
+                        ],
+                        distance: 1.8,
+                        label: 'Door'
+                    }
+                });
+                window.dispatchEvent(event2);
+            }, 50);
+        }
+        
+        function hideTarget() {
+            const event = new MessageEvent('message', {
+                data: {
+                    action: 'hide'
+                }
+            });
+            window.dispatchEvent(event);
+        }
+        
+        // Show empty target by default
+        showEmpty();
+    </script>
+</body>
+</html>

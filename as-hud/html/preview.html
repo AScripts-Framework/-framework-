@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS HUD - Browser Preview</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for browser preview */
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        .preview-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(30, 10, 60, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #8B5CF6;
+            z-index: 9999;
+        }
+        
+        .preview-controls h3 {
+            color: #E9D5FF;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .control-row {
+            margin-bottom: 10px;
+        }
+        
+        .control-row label {
+            color: #E9D5FF;
+            font-size: 12px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .control-row input[type="range"] {
+            width: 200px;
+        }
+        
+        .control-row button {
+            background: #8B5CF6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 5px;
+            font-size: 12px;
+        }
+        
+        .control-row button:hover {
+            background: #A78BFA;
+        }
+        
+        .info-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(30, 10, 60, 0.95);
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #8B5CF6;
+            color: #E9D5FF;
+            font-size: 12px;
+            max-width: 300px;
+        }
+        
+        .info-box h4 {
+            margin-bottom: 10px;
+            color: #A78BFA;
+        }
+    </style>
+</head>
+<body>
+    <!-- Preview Controls -->
+    <div class="preview-controls">
+        <h3><i class="fa-solid fa-sliders"></i> Preview Controls</h3>
+        
+        <div class="control-row">
+            <label>Health: <span id="health-display">100</span>%</label>
+            <input type="range" id="health-control" min="0" max="100" value="100">
+        </div>
+        
+        <div class="control-row">
+            <label>Armor: <span id="armor-display">50</span>%</label>
+            <input type="range" id="armor-control" min="0" max="100" value="50">
+        </div>
+        
+        <div class="control-row">
+            <label>Stamina: <span id="stamina-display">75</span>%</label>
+            <input type="range" id="stamina-control" min="0" max="100" value="75">
+        </div>
+        
+        <div class="control-row">
+            <button onclick="simulateAction()">Simulate Combat</button>
+            <button onclick="randomize()">Randomize</button>
+        </div>
+        
+        <div class="control-row">
+            <button onclick="openSettings()">Open Settings</button>
+            <button onclick="closeSettings()">Close Settings</button>
+        </div>
+        
+        <div class="control-row">
+            <button onclick="toggleVehicleHUD()">Toggle Vehicle HUD</button>
+        </div>
+    </div>
+    
+    <!-- Info Box -->
+    <div class="info-box">
+        <h4><i class="fa-solid fa-info-circle"></i> Browser Preview Mode</h4>
+        <p>Use the controls to test the HUD appearance and animations.</p>
+        <p><strong>Note:</strong> This is for design preview only. In-game functionality requires FiveM.</p>
+    </div>
+
+    <!-- Main HUD Container -->
+    <div id="hud-container" class="bottom-left" style="display: flex;">
+        <!-- Health -->
+        <div class="hud-stat" id="health-stat">
+            <div class="stat-icon">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+            <div class="stat-bar-container">
+                <div class="stat-bar">
+                    <div class="stat-fill" id="health-bar" style="width: 100%;"></div>
+                </div>
+            </div>
+            <div class="stat-value" id="health-value">100%</div>
+        </div>
+
+        <!-- Armor -->
+        <div class="hud-stat" id="armor-stat" style="display: flex;">
+            <div class="stat-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="stat-bar-container">
+                <div class="stat-bar">
+                    <div class="stat-fill" id="armor-bar" style="width: 50%;"></div>
+                </div>
+            </div>
+            <div class="stat-value" id="armor-value">50%</div>
+        </div>
+
+        <!-- Stamina -->
+        <div class="hud-stat" id="stamina-stat">
+            <div class="stat-icon">
+                <i class="fa-solid fa-person-running"></i>
+            </div>
+            <div class="stat-bar-container">
+                <div class="stat-bar">
+                    <div class="stat-fill" id="stamina-bar" style="width: 75%;"></div>
+                </div>
+            </div>
+            <div class="stat-value" id="stamina-value">75%</div>
+        </div>
+    </div>
+
+    <!-- Vehicle HUD Container -->
+    <div id="vehicle-hud" style="display: flex;">
+        <div class="speedometer-container">
+            <!-- Main SVG Speedometer -->
+            <svg class="speedometer-gauge" viewBox="0 0 200 130">
+                <defs>
+                    <linearGradient id="speedGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" class="gradient-start" />
+                        <stop offset="100%" class="gradient-end" />
+                    </linearGradient>
+                    <linearGradient id="fuelGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" class="gradient-start" />
+                        <stop offset="100%" class="gradient-end" />
+                    </linearGradient>
+                    <linearGradient id="rpmGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" class="gradient-start" />
+                        <stop offset="100%" class="gradient-end" />
+                    </linearGradient>
+                </defs>
+                
+                <!-- Speed Arc (Outer) -->
+                <path class="gauge-bg" d="M 30 100 A 70 70 0 0 1 170 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10" stroke-linecap="round"/>
+                <path class="gauge-fill" id="speed-arc" d="M 30 100 A 70 70 0 0 1 170 100" fill="none" stroke="url(#speedGradient)" stroke-width="10" stroke-linecap="round" stroke-dasharray="220" stroke-dashoffset="132"/>
+                
+                <!-- RPM Arc (Middle) -->
+                <path class="gauge-bg" d="M 45 100 A 55 55 0 0 1 155 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="7" stroke-linecap="round"/>
+                <path class="gauge-fill" id="rpm-arc" d="M 45 100 A 55 55 0 0 1 155 100" fill="none" stroke="url(#rpmGradient)" stroke-width="7" stroke-linecap="round" stroke-dasharray="172.7" stroke-dashoffset="86.35"/>
+                
+                <!-- Fuel Arc (Inner) -->
+                <path class="gauge-bg" d="M 58 100 A 42 42 0 0 1 142 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="5" stroke-linecap="round"/>
+                <path class="gauge-fill" id="fuel-arc" d="M 58 100 A 42 42 0 0 1 142 100" fill="none" stroke="url(#fuelGradient)" stroke-width="5" stroke-linecap="round" stroke-dasharray="131.9" stroke-dashoffset="32.975"/>
+            </svg>
+            
+            <!-- Center Content -->
+            <div class="speedometer-center">
+                <div class="speed-display">
+                    <div class="speed-value" id="speed-value">80</div>
+                    <div class="speed-unit">MPH</div>
+                </div>
+                <div class="gear-display" id="gear-value">3</div>
+            </div>
+            
+            <!-- Bottom Info -->
+            <div class="speedometer-info">
+                <div class="info-item">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <span id="rpm-value">4k</span>
+                    <span class="info-label">RPM</span>
+                </div>
+                <div class="info-item">
+                    <i class="fa-solid fa-gas-pump" id="fuel-icon"></i>
+                    <span id="fuel-value">75</span>
+                    <span class="info-label">%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Menu -->
+    <div id="settings-menu" style="display: none;">
+        <div class="settings-header">
+            <h2><i class="fa-solid fa-gear"></i> HUD Settings</h2>
+            <button class="close-btn" id="close-settings"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        
+        <div class="settings-content">
+            <!-- Position -->
+            <div class="setting-group">
+                <label>Position</label>
+                <div class="button-group">
+                    <button class="setting-btn" data-setting="position" data-value="top-left">
+                        <i class="fa-solid fa-arrow-up-left"></i> Top Left
+                    </button>
+                    <button class="setting-btn" data-setting="position" data-value="top-right">
+                        <i class="fa-solid fa-arrow-up-right"></i> Top Right
+                    </button>
+                    <button class="setting-btn active" data-setting="position" data-value="bottom-left">
+                        <i class="fa-solid fa-arrow-down-left"></i> Bottom Left
+                    </button>
+                    <button class="setting-btn" data-setting="position" data-value="bottom-right">
+                        <i class="fa-solid fa-arrow-down-right"></i> Bottom Right
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scale -->
+            <div class="setting-group">
+                <label>Size: <span id="scale-display">100%</span></label>
+                <input type="range" id="scale-slider" min="50" max="200" value="100" step="10">
+            </div>
+
+            <!-- Icon Style -->
+            <div class="setting-group">
+                <label>Icon Style</label>
+                <div class="button-group">
+                    <button class="setting-btn active" data-setting="iconStyle" data-value="modern">
+                        <i class="fa-solid fa-stars"></i> Modern
+                    </button>
+                    <button class="setting-btn" data-setting="iconStyle" data-value="classic">
+                        <i class="fa-solid fa-heart-pulse"></i> Classic
+                    </button>
+                    <button class="setting-btn" data-setting="iconStyle" data-value="minimal">
+                        <i class="fa-solid fa-minimize"></i> Minimal
+                    </button>
+                </div>
+            </div>
+
+            <!-- Color Theme -->
+            <div class="setting-group">
+                <label>Color Theme</label>
+                <div class="button-group">
+                    <button class="setting-btn color-btn purple active" data-setting="colorTheme" data-value="purple">
+                        Purple
+                    </button>
+                    <button class="setting-btn color-btn blue" data-setting="colorTheme" data-value="blue">
+                        Blue
+                    </button>
+                    <button class="setting-btn color-btn red" data-setting="colorTheme" data-value="red">
+                        Red
+                    </button>
+                    <button class="setting-btn color-btn green" data-setting="colorTheme" data-value="green">
+                        Green
+                    </button>
+                </div>
+            </div>
+
+            <!-- Offset Controls -->
+            <div class="setting-group">
+                <label>Horizontal Offset: <span id="offsetx-display">20px</span></label>
+                <input type="range" id="offsetx-slider" min="0" max="200" value="20" step="5">
+            </div>
+
+            <div class="setting-group">
+                <label>Vertical Offset: <span id="offsety-display">0px</span></label>
+                <input type="range" id="offsety-slider" min="0" max="200" value="0" step="5">
+            </div>
+
+            <!-- Vehicle HUD Settings -->
+            <div class="setting-group">
+                <label style="color: #A78BFA; font-size: 16px; margin-top: 15px;"><i class="fa-solid fa-car"></i> Vehicle HUD Settings</label>
+            </div>
+
+            <div class="setting-group">
+                <label>Vehicle Position</label>
+                <div class="button-group">
+                    <button class="setting-btn" data-setting="vehiclePosition" data-value="bottom-left">
+                        <i class="fa-solid fa-arrow-down-left"></i> Bottom Left
+                    </button>
+                    <button class="setting-btn active" data-setting="vehiclePosition" data-value="bottom-center">
+                        <i class="fa-solid fa-arrow-down"></i> Bottom Center
+                    </button>
+                    <button class="setting-btn" data-setting="vehiclePosition" data-value="bottom-right">
+                        <i class="fa-solid fa-arrow-down-right"></i> Bottom Right
+                    </button>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <label>Vehicle Size: <span id="vehicle-scale-display">100%</span></label>
+                <input type="range" id="vehicle-scale-slider" min="50" max="200" value="100" step="10">
+            </div>
+
+            <div class="setting-group">
+                <label>Vehicle Horizontal Offset: <span id="vehicle-offsetx-display">0px</span></label>
+                <input type="range" id="vehicle-offsetx-slider" min="-200" max="200" value="0" step="5">
+            </div>
+
+            <div class="setting-group">
+                <label>Vehicle Vertical Offset: <span id="vehicle-offsety-display">0px</span></label>
+                <input type="range" id="vehicle-offsety-slider" min="0" max="200" value="0" step="5">
+            </div>
+
+            <!-- Reset Button -->
+            <div class="setting-group">
+                <button class="reset-btn" id="reset-settings">
+                    <i class="fa-solid fa-rotate-left"></i> Reset to Default
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Browser preview overrides
+        window.GetParentResourceName = function() {
+            return 'as-hud';
+        };
+        
+        window.fetch = function(url, options) {
+            console.log('Fetch called:', url, options);
+            return Promise.resolve({ ok: true });
+        };
+        
+        // Preview controls
+        document.getElementById('health-control').addEventListener('input', (e) => {
+            const value = parseInt(e.target.value);
+            document.getElementById('health-display').textContent = value;
+            updateHUD({ health: value, armor: parseInt(document.getElementById('armor-control').value), stamina: parseInt(document.getElementById('stamina-control').value) });
+        });
+        
+        document.getElementById('armor-control').addEventListener('input', (e) => {
+            const value = parseInt(e.target.value);
+            document.getElementById('armor-display').textContent = value;
+            updateHUD({ health: parseInt(document.getElementById('health-control').value), armor: value, stamina: parseInt(document.getElementById('stamina-control').value) });
+        });
+        
+        document.getElementById('stamina-control').addEventListener('input', (e) => {
+            const value = parseInt(e.target.value);
+            document.getElementById('stamina-display').textContent = value;
+            updateHUD({ health: parseInt(document.getElementById('health-control').value), armor: parseInt(document.getElementById('armor-control').value), stamina: value });
+        });
+        
+        function simulateAction() {
+            let health = 100;
+            let armor = 50;
+            let stamina = 100;
+            
+            const interval = setInterval(() => {
+                health = Math.max(0, health - Math.random() * 10);
+                armor = Math.max(0, armor - Math.random() * 15);
+                stamina = Math.max(20, stamina - Math.random() * 20);
+                
+                document.getElementById('health-control').value = health;
+                document.getElementById('armor-control').value = armor;
+                document.getElementById('stamina-control').value = stamina;
+                document.getElementById('health-display').textContent = Math.round(health);
+                document.getElementById('armor-display').textContent = Math.round(armor);
+                document.getElementById('stamina-display').textContent = Math.round(stamina);
+                
+                updateHUD({ health, armor, stamina });
+                
+                if (health <= 0) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        health = 100;
+                        armor = 50;
+                        stamina = 100;
+                        document.getElementById('health-control').value = 100;
+                        document.getElementById('armor-control').value = 50;
+                        document.getElementById('stamina-control').value = 100;
+                        document.getElementById('health-display').textContent = 100;
+                        document.getElementById('armor-display').textContent = 50;
+                        document.getElementById('stamina-display').textContent = 100;
+                        updateHUD({ health: 100, armor: 50, stamina: 100 });
+                    }, 2000);
+                }
+            }, 500);
+        }
+        
+        function randomize() {
+            const health = Math.random() * 100;
+            const armor = Math.random() * 100;
+            const stamina = Math.random() * 100;
+            
+            document.getElementById('health-control').value = health;
+            document.getElementById('armor-control').value = armor;
+            document.getElementById('stamina-control').value = stamina;
+            document.getElementById('health-display').textContent = Math.round(health);
+            document.getElementById('armor-display').textContent = Math.round(armor);
+            document.getElementById('stamina-display').textContent = Math.round(stamina);
+            
+            updateHUD({ health, armor, stamina });
+        }
+        
+        function openSettings() {
+            document.getElementById('settings-menu').style.display = 'block';
+        }
+        
+        function closeSettings() {
+            document.getElementById('settings-menu').style.display = 'none';
+        }
+        
+        function toggleVehicleHUD() {
+            const vehicleHud = document.getElementById('vehicle-hud');
+            if (vehicleHud.style.display === 'none') {
+                vehicleHud.style.display = 'flex';
+            } else {
+                vehicleHud.style.display = 'none';
+            }
+        }
+        
+        // Initial update
+        setTimeout(() => {
+            updateHUD({ health: 100, armor: 50, stamina: 75 });
+        }, 100);
+    </script>
+</body>
+</html>

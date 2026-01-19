@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Police Preview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1E3A8A 0%, #1E40AF 50%, #1F2937 100%);
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 48px;
+            text-shadow: 0 0 20px rgba(30, 64, 175, 0.5);
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .preview-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #1E40AF;
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .preview-card h2 {
+            color: #3B82F6;
+            margin-bottom: 20px;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .preview-card h2 i {
+            font-size: 32px;
+        }
+
+        .preview-card p {
+            color: #D1D5DB;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .feature-list li {
+            color: #fff;
+            padding: 12px;
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 3px solid #3B82F6;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .feature-list li i {
+            color: #3B82F6;
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .station-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .station-item {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(30, 64, 175, 0.1) 100%);
+            border: 1px solid #3B82F6;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .station-item h4 {
+            color: #3B82F6;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .station-item p {
+            color: #9CA3AF;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .weapon-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .weapon-item {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid #3B82F6;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .weapon-item i {
+            font-size: 24px;
+            color: #3B82F6;
+        }
+
+        .weapon-info h4 {
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        .weapon-info p {
+            color: #9CA3AF;
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #3B82F6;
+            color: #fff;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(30, 64, 175, 0.2) 100%);
+            border: 1px solid #3B82F6;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-card i {
+            font-size: 36px;
+            color: #3B82F6;
+            margin-bottom: 10px;
+        }
+
+        .stat-card h3 {
+            color: #fff;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #9CA3AF;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #3B82F6;
+            border-radius: 8px;
+            padding: 16px;
+            color: #93C5FD;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin-top: 12px;
+        }
+
+        .alert-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .alert-item {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #EF4444;
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .alert-item .code {
+            color: #EF4444;
+            font-weight: 700;
+            font-size: 16px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .alert-item .label {
+            color: #FCA5A5;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚔 AS-Police Preview</h1>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-building"></i>
+                <h3>4</h3>
+                <p>Police Stations</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-car"></i>
+                <h3>10+</h3>
+                <p>Police Vehicles</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-gun"></i>
+                <h3>15+</h3>
+                <p>Weapons & Equipment</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-bell"></i>
+                <h3>7</h3>
+                <p>Dispatch Alerts</p>
+            </div>
+        </div>
+
+        <div class="preview-grid">
+            <!-- Stations -->
+            <div class="preview-card">
+                <h2><i class="fas fa-building"></i> Police Stations</h2>
+                <p>Four fully-equipped stations across San Andreas.</p>
+                <div class="station-grid">
+                    <div class="station-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Mission Row PD</h4>
+                        <p>Main Los Santos station</p>
+                    </div>
+                    <div class="station-item">
+                        <h4><i class="fas fa-umbrella-beach"></i> Vespucci PD</h4>
+                        <p>Beach-side station</p>
+                    </div>
+                    <div class="station-item">
+                        <h4><i class="fas fa-mountain"></i> Sandy Shores</h4>
+                        <p>Desert county sheriff</p>
+                    </div>
+                    <div class="station-item">
+                        <h4><i class="fas fa-tree"></i> Paleto Bay</h4>
+                        <p>Northern county sheriff</p>
+                    </div>
+                </div>
+                <ul class="feature-list" style="margin-top: 20px;">
+                    <li><i class="fas fa-clock"></i> Duty toggle points</li>
+                    <li><i class="fas fa-box"></i> Armory access</li>
+                    <li><i class="fas fa-warehouse"></i> Vehicle garages</li>
+                    <li><i class="fas fa-archive"></i> Evidence lockers</li>
+                </ul>
+            </div>
+
+            <!-- Armory System -->
+            <div class="preview-card">
+                <h2><i class="fas fa-gun"></i> Armory System</h2>
+                <p>Rank-based weapon and equipment access.</p>
+                <div class="weapon-grid">
+                    <div class="weapon-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="weapon-info">
+                            <h4>Recruit <span class="badge">Rank 0</span></h4>
+                            <p>Nightstick, Taser, Pistol</p>
+                        </div>
+                    </div>
+                    <div class="weapon-item">
+                        <i class="fas fa-user-shield"></i>
+                        <div class="weapon-info">
+                            <h4>Officer <span class="badge">Rank 1</span></h4>
+                            <p>+ Combat Pistol, Carbine</p>
+                        </div>
+                    </div>
+                    <div class="weapon-item">
+                        <i class="fas fa-star"></i>
+                        <div class="weapon-info">
+                            <h4>Sergeant <span class="badge">Rank 2</span></h4>
+                            <p>+ Pump Shotgun</p>
+                        </div>
+                    </div>
+                    <div class="weapon-item">
+                        <i class="fas fa-medal"></i>
+                        <div class="weapon-info">
+                            <h4>Chief <span class="badge">Rank 4</span></h4>
+                            <p>+ SMG, Sniper Rifle</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-block">
+                    Equipment: Handcuffs, Radio, Armor<br>
+                    Tools: Battering Ram, Spike Strips<br>
+                    Evidence: Evidence Bags (5 per pickup)
+                </div>
+            </div>
+
+            <!-- Vehicle System -->
+            <div class="preview-card">
+                <h2><i class="fas fa-car"></i> Vehicle System</h2>
+                <p>Rank-based vehicle spawning with automatic plates.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-car-side"></i> Police Cruisers (Multiple variants)</li>
+                    <li><i class="fas fa-motorcycle"></i> Police Motorcycles</li>
+                    <li><i class="fas fa-user-secret"></i> Unmarked Vehicles (Lieutenant+)</li>
+                    <li><i class="fas fa-truck"></i> SWAT Van (Chief only)</li>
+                    <li><i class="fas fa-helicopter"></i> Police Helicopter (Chief only)</li>
+                </ul>
+                <div class="code-block">
+                    // Automatic features:<br>
+                    - LSPD#### plate generation<br>
+                    - Livery & extras support<br>
+                    - Vehicle ownership tracking<br>
+                    - Easy store/retrieve system
+                </div>
+            </div>
+
+            <!-- Player Interactions -->
+            <div class="preview-card">
+                <h2><i class="fas fa-handcuffs"></i> Player Interactions</h2>
+                <p>Comprehensive player control and processing system.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-link"></i> Handcuff / Uncuff suspects</li>
+                    <li><i class="fas fa-walking"></i> Drag handcuffed players</li>
+                    <li><i class="fas fa-car-side"></i> Put in / Remove from vehicles</li>
+                    <li><i class="fas fa-search"></i> Search inventory (ox_inventory)</li>
+                    <li><i class="fas fa-dollar-sign"></i> Issue fines with reason</li>
+                    <li><i class="fas fa-lock"></i> Send to jail with time</li>
+                </ul>
+                <div class="code-block">
+                    F6 → Interactions<br>
+                    Stand near player<br>
+                    Select action from menu
+                </div>
+            </div>
+
+            <!-- Evidence System -->
+            <div class="preview-card">
+                <h2><i class="fas fa-search"></i> Evidence System</h2>
+                <p>Collect and analyze crime scene evidence.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-circle"></i> Bullet Casings (auto-generated)</li>
+                    <li><i class="fas fa-tint"></i> Blood Samples (from damage)</li>
+                    <li><i class="fas fa-fingerprint"></i> Fingerprints (manual)</li>
+                    <li><i class="fas fa-dna"></i> DNA Samples (manual)</li>
+                    <li><i class="fas fa-camera"></i> Photo Evidence</li>
+                    <li><i class="fas fa-cube"></i> Item Evidence</li>
+                </ul>
+                <div class="code-block">
+                    Auto-despawn: 10 minutes<br>
+                    Requires: Evidence bags<br>
+                    Storage: ox_inventory metadata<br>
+                    Tracking: Who, when, where
+                </div>
+            </div>
+
+            <!-- MDT System -->
+            <div class="preview-card">
+                <h2><i class="fas fa-laptop"></i> Mobile Data Terminal</h2>
+                <p>Full-featured in-vehicle computer system.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-broadcast-tower"></i> Dispatch - Active calls list</li>
+                    <li><i class="fas fa-gavel"></i> Warrants - Create & manage</li>
+                    <li><i class="fas fa-file-alt"></i> Reports - File incidents</li>
+                    <li><i class="fas fa-users"></i> Roster - On-duty officers</li>
+                </ul>
+                <div class="code-block">
+                    F6 → MDT<br>
+                    Navigate with tab buttons<br>
+                    Real-time dispatch updates<br>
+                    Database-backed warrants
+                </div>
+            </div>
+
+            <!-- Dispatch Alerts -->
+            <div class="preview-card full-width">
+                <h2><i class="fas fa-bell"></i> Dispatch System</h2>
+                <p>Real-time alert system with map blips and notifications.</p>
+                <div class="alert-grid">
+                    <div class="alert-item">
+                        <span class="code">10-71</span>
+                        <span class="label">Shots Fired</span>
+                    </div>
+                    <div class="alert-item">
+                        <span class="code">10-40</span>
+                        <span class="label">Speeding Vehicle</span>
+                    </div>
+                    <div class="alert-item">
+                        <span class="code">10-90</span>
+                        <span class="label">Robbery</span>
+                    </div>
+                    <div class="alert-item">
+                        <span class="code">10-35</span>
+                        <span class="label">Car Jacking</span>
+                    </div>
+                    <div class="alert-item">
+                        <span class="code">10-10</span>
+                        <span class="label">Assault</span>
+                    </div>
+                    <div class="alert-item">
+                        <span class="code">10-34</span>
+                        <span class="label">Kidnapping</span>
+                    </div>
+                    <div class="alert-item">
+                        <span class="code">10-31</span>
+                        <span class="label">Drug Activity</span>
+                    </div>
+                </div>
+                <ul class="feature-list" style="margin-top: 20px;">
+                    <li><i class="fas fa-map"></i> Map blips with 100m radius</li>
+                    <li><i class="fas fa-clock"></i> Auto-removal after duration (45-90s)</li>
+                    <li><i class="fas fa-bell"></i> In-game notifications</li>
+                    <li><i class="fas fa-desktop"></i> MDT integration</li>
+                    <li><i class="fas fa-filter"></i> Only sent to on-duty police</li>
+                </ul>
+            </div>
+
+            <!-- Radar System -->
+            <div class="preview-card">
+                <h2><i class="fas fa-tachometer-alt"></i> Speed Radar</h2>
+                <p>In-vehicle speed detection system.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-arrow-up"></i> Front radar - 150m range</li>
+                    <li><i class="fas fa-arrow-down"></i> Rear radar - 150m range</li>
+                    <li><i class="fas fa-exclamation-triangle"></i> Visual speeding alerts</li>
+                    <li><i class="fas fa-broadcast-tower"></i> Auto-dispatch for speeders</li>
+                    <li><i class="fas fa-cog"></i> Configurable speed limit (80 mph)</li>
+                </ul>
+                <div class="code-block">
+                    /radar - Toggle radar on/off<br>
+                    Must be in police vehicle<br>
+                    Real-time speed display<br>
+                    Red flash when speeding
+                </div>
+            </div>
+
+            <!-- Jail System -->
+            <div class="preview-card">
+                <h2><i class="fas fa-lock"></i> Jail System</h2>
+                <p>Prison management with persistent tracking.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-clock"></i> Timed sentences (months)</li>
+                    <li><i class="fas fa-building"></i> Multiple jail cells</li>
+                    <li><i class="fas fa-user-check"></i> Auto-release on timer</li>
+                    <li><i class="fas fa-sync"></i> Persistent across reconnects</li>
+                    <li><i class="fas fa-unlock"></i> Manual release by officers</li>
+                    <li><i class="fas fa-database"></i> Database logging</li>
+                </ul>
+                <div class="code-block">
+                    Max time: 300 months (25 minutes)<br>
+                    Location: Bolingbroke Penitentiary<br>
+                    Time served tracked on disconnect
+                </div>
+            </div>
+
+            <!-- Integration -->
+            <div class="preview-card full-width">
+                <h2><i class="fas fa-puzzle-piece"></i> Framework Integration</h2>
+                <div class="preview-grid" style="margin-bottom: 0;">
+                    <div>
+                        <h3 style="color: #3B82F6; margin-bottom: 12px;">✅ ox_inventory</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-gun"></i> All weapons configured</li>
+                            <li><i class="fas fa-box"></i> Equipment items</li>
+                            <li><i class="fas fa-archive"></i> Evidence items with metadata</li>
+                            <li><i class="fas fa-bullets"></i> Ammo types (9mm, rifle, shotgun)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #3B82F6; margin-bottom: 12px;">✅ AS Framework</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-briefcase"></i> Job integration (police/sheriff)</li>
+                            <li><i class="fas fa-chart-line"></i> Rank-based permissions</li>
+                            <li><i class="fas fa-bell"></i> Notification system</li>
+                            <li><i class="fas fa-tasks"></i> Progress bars/circles</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #3B82F6; margin-bottom: 12px;">✅ as-target</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-crosshairs"></i> All station interactions</li>
+                            <li><i class="fas fa-box"></i> Armory access</li>
+                            <li><i class="fas fa-warehouse"></i> Vehicle garages</li>
+                            <li><i class="fas fa-archive"></i> Evidence lockers</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #3B82F6; margin-bottom: 12px;">✅ Database (MySQL)</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-database"></i> Jail records</li>
+                            <li><i class="fas fa-gavel"></i> Warrants system</li>
+                            <li><i class="fas fa-search"></i> Evidence tracking</li>
+                            <li><i class="fas fa-file-alt"></i> Reports & fines</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding: 30px; background: rgba(59, 130, 246, 0.1); border: 2px solid #3B82F6; border-radius: 16px;">
+            <h2 style="color: #fff; margin-bottom: 16px;">🚔 Complete Police System</h2>
+            <p style="color: #D1D5DB; font-size: 18px; margin-bottom: 20px;">
+                Full-featured law enforcement with duty system, armory, vehicles, MDT, evidence collection, and dispatch
+            </p>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <div style="color: #3B82F6; font-weight: 700;"><i class="fas fa-check-circle"></i> 4 Police Stations</div>
+                <div style="color: #3B82F6; font-weight: 700;"><i class="fas fa-check-circle"></i> Rank-Based Access</div>
+                <div style="color: #3B82F6; font-weight: 700;"><i class="fas fa-check-circle"></i> Evidence System</div>
+                <div style="color: #3B82F6; font-weight: 700;"><i class="fas fa-check-circle"></i> Real-Time Dispatch</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS HUD</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Main HUD Container -->
+    <div id="hud-container" class="bottom-left" style="display: none;">
+        <!-- Health -->
+        <div class="hud-stat" id="health-stat">
+            <div class="stat-icon">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+            <div class="stat-bar-container">
+                <div class="stat-bar">
+                    <div class="stat-fill" id="health-bar" style="width: 100%;"></div>
+                </div>
+            </div>
+            <div class="stat-value" id="health-value">100%</div>
+        </div>
+
+        <!-- Armor (only shown when player has armor) -->
+        <div class="hud-stat" id="armor-stat" style="display: none;">
+            <div class="stat-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="stat-bar-container">
+                <div class="stat-bar">
+                    <div class="stat-fill" id="armor-bar" style="width: 0%;"></div>
+                </div>
+            </div>
+            <div class="stat-value" id="armor-value">0%</div>
+        </div>
+
+        <!-- Stamina -->
+        <div class="hud-stat" id="stamina-stat">
+            <div class="stat-icon">
+                <i class="fa-solid fa-person-running"></i>
+            </div>
+            <div class="stat-bar-container">
+                <div class="stat-bar">
+                    <div class="stat-fill" id="stamina-bar" style="width: 100%;"></div>
+                </div>
+            </div>
+            <div class="stat-value" id="stamina-value">100%</div>
+        </div>
+    </div>
+
+    <!-- Vehicle HUD Container (bottom-right) -->
+    <div id="vehicle-hud" style="display: none;">
+        <div class="speedometer-container">
+            <!-- Main SVG Speedometer -->
+            <svg class="speedometer-gauge" viewBox="0 0 200 130">
+                <defs>
+                    <linearGradient id="speedGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" class="gradient-start" />
+                        <stop offset="100%" class="gradient-end" />
+                    </linearGradient>
+                    <linearGradient id="fuelGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" class="gradient-start" />
+                        <stop offset="100%" class="gradient-end" />
+                    </linearGradient>
+                    <linearGradient id="rpmGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" class="gradient-start" />
+                        <stop offset="100%" class="gradient-end" />
+                    </linearGradient>
+                </defs>
+                
+                <!-- Speed Arc (Outer) -->
+                <path class="gauge-bg" d="M 30 100 A 70 70 0 0 1 170 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10" stroke-linecap="round"/>
+                <path class="gauge-fill" id="speed-arc" d="M 30 100 A 70 70 0 0 1 170 100" fill="none" stroke="url(#speedGradient)" stroke-width="10" stroke-linecap="round" stroke-dasharray="220" stroke-dashoffset="220"/>
+                
+                <!-- RPM Arc (Middle) -->
+                <path class="gauge-bg" d="M 45 100 A 55 55 0 0 1 155 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="7" stroke-linecap="round"/>
+                <path class="gauge-fill" id="rpm-arc" d="M 45 100 A 55 55 0 0 1 155 100" fill="none" stroke="url(#rpmGradient)" stroke-width="7" stroke-linecap="round" stroke-dasharray="172.7" stroke-dashoffset="172.7"/>
+                
+                <!-- Fuel Arc (Inner) -->
+                <path class="gauge-bg" d="M 58 100 A 42 42 0 0 1 142 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="5" stroke-linecap="round"/>
+                <path class="gauge-fill" id="fuel-arc" d="M 58 100 A 42 42 0 0 1 142 100" fill="none" stroke="url(#fuelGradient)" stroke-width="5" stroke-linecap="round" stroke-dasharray="131.9" stroke-dashoffset="131.9"/>
+            </svg>
+            
+            <!-- Center Content -->
+            <div class="speedometer-center">
+                <div class="speed-display">
+                    <div class="speed-value" id="speed-value">0</div>
+                    <div class="speed-unit">MPH</div>
+                </div>
+                <div class="gear-display" id="gear-value">N</div>
+            </div>
+            
+            <!-- Bottom Info -->
+            <div class="speedometer-info">
+                <div class="info-item">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <span id="rpm-value">0</span>
+                    <span class="info-label">RPM</span>
+                </div>
+                <div class="info-item">
+                    <i class="fa-solid fa-gas-pump" id="fuel-icon"></i>
+                    <span id="fuel-value">100</span>
+                    <span class="info-label">%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Menu -->
+    <div id="settings-menu" style="display: none;">
+        <div class="settings-header">
+            <h2><i class="fa-solid fa-gear"></i> HUD Settings</h2>
+            <button class="close-btn" id="close-settings"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        
+        <div class="settings-content">
+            <!-- Position -->
+            <div class="setting-group">
+                <label>Position</label>
+                <div class="button-group">
+                    <button class="setting-btn" data-setting="position" data-value="top-left">
+                        <i class="fa-solid fa-arrow-up-left"></i> Top Left
+                    </button>
+                    <button class="setting-btn" data-setting="position" data-value="top-right">
+                        <i class="fa-solid fa-arrow-up-right"></i> Top Right
+                    </button>
+                    <button class="setting-btn" data-setting="position" data-value="bottom-left">
+                        <i class="fa-solid fa-arrow-down-left"></i> Bottom Left
+                    </button>
+                    <button class="setting-btn" data-setting="position" data-value="bottom-right">
+                        <i class="fa-solid fa-arrow-down-right"></i> Bottom Right
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scale -->
+            <div class="setting-group">
+                <label>Size: <span id="scale-display">100%</span></label>
+                <input type="range" id="scale-slider" min="50" max="200" value="100" step="10">
+            </div>
+
+            <!-- Icon Style -->
+            <div class="setting-group">
+                <label>Icon Style</label>
+                <div class="button-group">
+                    <button class="setting-btn" data-setting="iconStyle" data-value="modern">
+                        <i class="fa-solid fa-stars"></i> Modern
+                    </button>
+                    <button class="setting-btn" data-setting="iconStyle" data-value="classic">
+                        <i class="fa-solid fa-heart-pulse"></i> Classic
+                    </button>
+                    <button class="setting-btn" data-setting="iconStyle" data-value="minimal">
+                        <i class="fa-solid fa-minimize"></i> Minimal
+                    </button>
+                </div>
+            </div>
+
+            <!-- Color Theme -->
+            <div class="setting-group">
+                <label>Color Theme</label>
+                <div class="button-group">
+                    <button class="setting-btn color-btn purple" data-setting="colorTheme" data-value="purple">
+                        Purple
+                    </button>
+                    <button class="setting-btn color-btn blue" data-setting="colorTheme" data-value="blue">
+                        Blue
+                    </button>
+                    <button class="setting-btn color-btn red" data-setting="colorTheme" data-value="red">
+                        Red
+                    </button>
+                    <button class="setting-btn color-btn green" data-setting="colorTheme" data-value="green">
+                        Green
+                    </button>
+                </div>
+            </div>
+
+            <!-- Offset Controls -->
+            <div class="setting-group">
+                <label>Horizontal Offset: <span id="offsetx-display">20px</span></label>
+                <input type="range" id="offsetx-slider" min="0" max="200" value="20" step="5">
+            </div>
+
+            <div class="setting-group">
+                <label>Vertical Offset: <span id="offsety-display">0px</span></label>
+                <input type="range" id="offsety-slider" min="0" max="200" value="0" step="5">
+            </div>
+
+            <!-- Vehicle HUD Settings -->
+            <div class="setting-group">
+                <label style="color: #A78BFA; font-size: 16px; margin-top: 15px;"><i class="fa-solid fa-car"></i> Vehicle HUD Settings</label>
+            </div>
+
+            <div class="setting-group">
+                <label>Vehicle Position</label>
+                <div class="button-group">
+                    <button class="setting-btn" data-setting="vehiclePosition" data-value="bottom-left">
+                        <i class="fa-solid fa-arrow-down-left"></i> Bottom Left
+                    </button>
+                    <button class="setting-btn" data-setting="vehiclePosition" data-value="bottom-center">
+                        <i class="fa-solid fa-arrow-down"></i> Bottom Center
+                    </button>
+                    <button class="setting-btn" data-setting="vehiclePosition" data-value="bottom-right">
+                        <i class="fa-solid fa-arrow-down-right"></i> Bottom Right
+                    </button>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <label>Vehicle Size: <span id="vehicle-scale-display">100%</span></label>
+                <input type="range" id="vehicle-scale-slider" min="50" max="200" value="100" step="10">
+            </div>
+
+            <div class="setting-group">
+                <label>Vehicle Horizontal Offset: <span id="vehicle-offsetx-display">0px</span></label>
+                <input type="range" id="vehicle-offsetx-slider" min="-200" max="200" value="0" step="5">
+            </div>
+
+            <div class="setting-group">
+                <label>Vehicle Vertical Offset: <span id="vehicle-offsety-display">0px</span></label>
+                <input type="range" id="vehicle-offsety-slider" min="0" max="200" value="0" step="5">
+            </div>
+
+            <!-- Reset Button -->
+            <div class="setting-group">
+                <button class="reset-btn" id="reset-settings">
+                    <i class="fa-solid fa-rotate-left"></i> Reset to Default
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

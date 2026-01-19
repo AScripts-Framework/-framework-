@@ -1,0 +1,216 @@
+:root {
+    --primary-color: #8B5CF6;
+    --secondary-color: #A78BFA;
+    --background-color: rgba(30, 10, 60, 0.95);
+    --text-color: #E9D5FF;
+    --success-color: #10B981;
+    --danger-color: #EF4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    background: transparent;
+}
+
+#target-container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+}
+
+/* Target Eye */
+#target-eye {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--background-color);
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+    animation: pulse 2s infinite;
+    transition: all 0.3s ease;
+}
+
+#target-eye i {
+    font-size: 18px;
+    color: var(--primary-color);
+    filter: drop-shadow(0 0 6px var(--primary-color));
+}
+
+#target-eye.active {
+    border-color: var(--success-color);
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.8);
+}
+
+#target-eye.active i {
+    color: var(--success-color);
+    filter: drop-shadow(0 0 8px var(--success-color));
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+}
+
+/* Options Menu */
+#target-options {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-left: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#target-options.show {
+    opacity: 1;
+    margin-left: 140px;
+}
+
+/* Option Item */
+.target-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--background-color);
+    backdrop-filter: blur(10px);
+    border-radius: 6px;
+    border: 1.5px solid var(--primary-color);
+    box-shadow: 0 2px 10px rgba(139, 92, 246, 0.3);
+    min-width: 160px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: slideIn 0.3s ease-out;
+    transform-origin: left center;
+}
+
+.target-option:hover {
+    background: rgba(139, 92, 246, 0.2);
+    border-color: var(--secondary-color);
+    box-shadow: 0 4px 16px rgba(139, 92, 246, 0.5);
+    transform: translateX(5px);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Option Icon */
+.option-icon {
+    font-size: 14px;
+    color: var(--primary-color);
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 3px var(--primary-color));
+}
+
+/* Option Label */
+.option-label {
+    font-size: 13px;
+    color: var(--text-color);
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    flex: 1;
+}
+
+/* Option Keybind */
+.option-keybind {
+    font-size: 10px;
+    color: var(--secondary-color);
+    background: rgba(139, 92, 246, 0.2);
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+    border: 1px solid var(--primary-color);
+}
+
+/* Selected Option */
+.target-option.selected {
+    background: rgba(139, 92, 246, 0.3);
+    border-color: var(--secondary-color);
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.6);
+}
+
+.target-option.selected .option-icon {
+    color: var(--secondary-color);
+}
+
+/* Distance Indicator */
+#distance-indicator {
+    position: absolute;
+    bottom: 62%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--background-color);
+    padding: 4px 10px;
+    border-radius: 5px;
+    border: 1.5px solid var(--primary-color);
+    box-shadow: 0 2px 10px rgba(139, 92, 246, 0.3);
+    font-size: 11px;
+    color: var(--text-color);
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#distance-indicator.show {
+    opacity: 1;
+}
+
+/* Entity Label */
+#entity-label {
+    position: absolute;
+    bottom: 57%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--background-color);
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: 1.5px solid var(--primary-color);
+    box-shadow: 0 2px 10px rgba(139, 92, 246, 0.3);
+    font-size: 13px;
+    color: var(--text-color);
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+#entity-label.show {
+    opacity: 1;
+}

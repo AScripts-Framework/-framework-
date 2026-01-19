@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Framework - Loading</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="config.js"></script>
+</head>
+<body>
+    <!-- Video Background with Audio -->
+    <video id="bgVideo" autoplay playsinline>
+        <!-- Videos will be loaded dynamically from script.js -->
+    </video>
+
+    <!-- Logo Container (Hidden) -->
+    <div class="logo-container" style="display: none;">
+        <img src="logo.png" alt="AS Framework" class="logo" onerror="this.style.display='none'">
+        <h1 class="server-name">AS FRAMEWORK</h1>
+        <p class="server-tagline">Advanced Roleplay Experience</p>
+    </div>
+
+    <!-- Loading Progress -->
+    <div class="loading-container">
+        <div class="progress-wrapper">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Connecting to server...</div>
+        </div>
+    </div>
+
+    <!-- Media Controls -->
+    <div class="controls-container">
+        <!-- Album Art & Track Info -->
+        <div class="track-info">
+            <img src="videos/album1.jpg" alt="Album Art" class="album-art" id="albumArt" onerror="this.style.display='none'">
+            <div class="track-details">
+                <div class="track-song" id="trackSong">Song Title</div>
+                <div class="track-artist" id="trackArtist">Artist Name</div>
+            </div>
+        </div>
+
+        <!-- Play/Pause Button -->
+        <button class="control-btn" id="playPauseBtn" title="Play/Pause">
+            <svg class="icon" id="playIcon" style="display: none;" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+            <svg class="icon" id="pauseIcon" viewBox="0 0 24 24">
+                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+            </svg>
+        </button>
+
+        <!-- Skip Back -->
+        <button class="control-btn" id="skipBackBtn" title="Skip Back 10s">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M11.99 5V1l-5 5 5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6h-2c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                <text x="10" y="15" font-size="8" fill="currentColor">10</text>
+            </svg>
+        </button>
+
+        <!-- Skip Forward -->
+        <button class="control-btn" id="skipForwardBtn" title="Skip Forward 10s">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M12.01 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/>
+                <text x="10" y="15" font-size="8" fill="currentColor">10</text>
+            </svg>
+        </button>
+
+        <!-- Time Slider -->
+        <div class="slider-group">
+            <span class="time-display" id="currentTime">0:00</span>
+            <input type="range" class="slider time-slider" id="timeSlider" min="0" max="100" value="0">
+            <span class="time-display" id="duration">0:00</span>
+        </div>
+
+        <!-- Volume Control -->
+        <div class="volume-control">
+            <button class="control-btn" id="muteBtn" title="Mute/Unmute">
+                <svg class="icon" id="volumeIcon" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                </svg>
+                <svg class="icon" id="muteIcon" style="display: none;" viewBox="0 0 24 24">
+                    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                </svg>
+            </button>
+            <input type="range" class="slider volume-slider" id="volumeSlider" min="0" max="100" value="30">
+        </div>
+    </div>
+
+    <!-- Loading Messages -->
+    <div class="loading-messages" id="loadingMessages">
+        <p>Welcome to AS Framework</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
